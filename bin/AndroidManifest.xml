@@ -65,16 +65,22 @@
         </activity>
 
         <service
-            android:name="com.cardpay.banksaler_rocket.UploadService"
+            android:name=".UploadService"
             android:enabled="true" />
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" >
         </service>
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="5IrVaVkDmtBKwFuwhQk9F2CFXdhGFUxR" />
+
+        <activity
+            android:name=".SendActivity"
+            android:label="@string/title_activity_send" >
+        </activity>
     </application>
 
 </manifest>

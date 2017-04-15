@@ -141,6 +141,8 @@ input[type=button].next{float:right;margin:15px 40px 0 0;}
 .images{margin:5px;float:left;display:inline-block;}
 .images img{width:350px;height:350px;}
 
+
+
 /*<!--�ͻ�����-->*/
 .box{width:9em;height:9em;border-radius:1em;float:left;margin-left:1em;margin-top:1em;margin-bottom:1em;text-align:center;}
 .box img{width:5em;height:5em;margin-top:1em;margin-bottom:0.5em;}
@@ -348,3 +350,8 @@ label.radio{padding-left:30px;}
     -webkit-transform: scale(1.0);
   }
 }
+/*<!--客户管理-->*/
+.slt{width:95%;margin-left:2.5%;clear:both;margin-top:-10px;}
+.slt img{width:24%;height:200px;margin-right:0.5%;margin-left:0.5%;margin-bottom:10px;}
+#pullUp{margin-left:2.5%;}
+.pullUpLabel{color:gray;}

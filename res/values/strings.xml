@@ -2,5 +2,7 @@
 <resources>
 
     <string name="app_name">小微贷款系统</string>
+    <string name="title_activity_send">SendActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
