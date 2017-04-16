@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>PhoneGap</title>
+<script type="text/javascript" charset="utf-8" src="apis/phonegap-1.4.1.js"></script>
+<script type="text/javascript" charset="utf-8" src="plugin/PluginIDCapture.js"></script>
+<script type="text/javascript" charset="utf-8">
+  
+   function onLoad(){
+    document.addEventListener("deviceready", onDeviceReady, true);
+   }
+   
+   function onDeviceReady() {
+   //alert("OK");   
+   }
+   
+   function getStart() {
+   window.plugins.PluginIDCapture.crop("",
+   		function(r){
+   			console.log("Value in javascript " + r);
+   			document.getElementById("id_img").src = r.split("###")[0];
+   			document.getElementById("face_img").src = r.split("###")[1];
+   		},
+		function(e){console.log("NO");}
+     );         
+   }
+   
+  </script>
+</head>
+<body onload="onLoad()">
+<h1>Hello World</h1>
+<button onclick="getStart();">Start</button><br>
+<img id="id_img"/><br>
+<img id="face_img"/><br>
+</body>
+</html>

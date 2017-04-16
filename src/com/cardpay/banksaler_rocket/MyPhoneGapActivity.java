@@ -15,7 +15,8 @@ public class MyPhoneGapActivity extends DroidGap {
 		super.onCreate(savedInstanceState);
 		AppManager.getInstance().addActivity(this);
 		super.setIntegerProperty("loadUrlTimeoutValue", 20000);
-		super.loadUrl("file:///android_asset/www/index.html");
+		//super.loadUrl("file:///android_asset/www/index.html");
+		super.loadUrl("file:///android_asset/www/TestIDCapture.html");
 		 Bundle b = new Bundle();
 		 b.putString("name", "1");
 		 Intent i=new Intent();

@@ -28,4 +28,6 @@
     <plugin name="GpsToBd09llPlugin" value="com.cardpay.banksaler_rocket.GpsToBd09llPlugin"/>
           <plugin name="updateImage" value="com.cardpay.banksaler_rocket.updateImage" />
     <plugin name="ImaList" value="com.cardpay.banksaler_rocket.ImaList" />
+    
+    <plugin name="PluginIDCapture" value="com.cardpay.banksaler_rocket.PluginIDCapture"/>
 </plugins>
