@@ -137,7 +137,7 @@ function pclr(){
 			}
 			result[j]=tmp;
 			window.scrollTo(0,0);//滚动条回到顶端
-			$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='khgl()'/>客户管理-普查录入</div>"+  
+			$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='mykhgl()'/>客户管理-普查录入</div>"+  
 					"<div class='content'>" +                        
 					"<table id='sdlb' class='cpTable jjTable' style='text-align:center;'>"+
 					head+result[page]+
@@ -338,7 +338,34 @@ $("#mainPage").html("<div class='title'><img src='images/back.png' onclick='xzpc
 }
 
 
-
+function deleteIma1(id){//显示登出提示
+    $("#text").html("<div class='display-div' id='xdyss'>"+
+                        "<div class='dialog-head'>"+
+                           "<h4>删除图片</h4>"+
+                        "</div>"+
+                        "<div class='dialog-content'>"+
+                           " 你确定要删除图片吗？"+
+                        "</div>"+
+                        "<div class='dialog-bottom'>"+
+                           "<button type='button' class='btn btn-default' onclick='hide_dcts()'>取消</button>"+
+                           "<button type='button' class='btn btn-danger' id='sure'>确定</button>"+
+                        "</div>"+
+                    "</div><!-- /display-div -->");
+    $("#text").animate({top:"0px"},"500");
+    $("#sure").click(function(){
+    	var url=wsHost+"/ipad/pccustormer/deleteImage.json?id="+id;
+    	$.ajax({
+    	    url:url,
+    	    type: "GET",
+    	    dataType:'json',
+    	    success: function (json) {
+    	    	var objs = $.evalJSON(json);
+    	    	alert(objs.result);
+    	    	pcxq1(ress);
+    	    	hide_dcts();
+    	    }});
+    });
+}
 var ress;
 //普查录入-普查详情
 function pcxq1(res){
@@ -346,19 +373,22 @@ function pcxq1(res){
 	
 window.scrollTo(0,0);//滚动条回到顶端
 var findpcImage="/ipad/pccustormer/ckpcImage.json?cardid="+res.cardid;
-var findpcImage1="http://192.168.191.1:8080/PCCredit/ipad/pccustormer/ckpcImageById.json?id=";
+var findpcImage1="http://192.168.191.1:8080/PCCredit/ipad/pccustormer/ckpcImageById.json?id=0";
 var th="";
 var id="";
+var lltpurl="";
+var page = 0;
 $.ajax({
     url:wsHost + findpcImage,
     type: "GET",
     dataType:'json',
     success: function (json) {
     	var objs = $.evalJSON(json);
-    		  for(var i=0;i<objs.size;i++){
-    	    		th=th+"<img class='images' id='ima"+i+"' src='http://192.168.191.1:8080/PCCredit/ipad/pccustormer/ckpcImageById.json?id="+objs.result[i].id+"'/>";         
-    	    	}
-      
+    		  /*for(var i=0;i<objs.size;i++){
+    	    		th=th+"<img class='images' id='ima"+i+"' src='http://192.168.191.1:8080/PCCredit/ipad/pccustormer/ckpcImageById.json?uri="+objs.result[0].uri+"&attment="+objs.result[0].attachment+"&i="+i+"'/>";         
+    	    	}*/
+    	 id=objs.result[0].id;
+		lltpurl="/ipad/pccustormer/ckpcImageById.json?userId=0&id="+id;
 $("#mainPage").html("<div class='title' '><img src='images/back.png' onclick='pclr()'/>客户管理-普查录入-王军忠</div>"+  
                 "<div class='content' >" +                       
                     "<table class='cpTable'>"+
@@ -379,7 +409,7 @@ $("#mainPage").html("<div class='title' '><img src='images/back.png' onclick='pc
                             "<th>身份证地址</th>"+
                             "<td colspan='3'><input type='text' class='long' value='"+res.sfzdz+"'/></td>"+
                         "</tr>"+
-                        "<tr>"+    
+                        "<tr>"+ 
                             "<th>所属行业</th>"+
                             "<td><input type='text' value='"+res.hy+"'/></td>"+
                             "<th>店铺地址</th>"+
@@ -388,29 +418,43 @@ $("#mainPage").html("<div class='title' '><img src='images/back.png' onclick='pc
                     "</table>"+ 
                     "<table class='cpTable'>"+
                     "<tr>"+                             
-                    "<th>编辑经营场所照片 <input type='button' class='btn' value='显示图集' id='bj' style='margin:0;'></th>"+
-                "</tr>"+
+                    "<th>编辑经营场所照片 </th>"+
+                    //"<th>编辑经营场所照片 <input type='button' class='btn' value='显示图集' id='bj' style='margin:0;'></th>"+
+                    "</tr>"+
             "</table>"+ 
-            "<div id='list'>"+
+    		"<div class='content' id='imageBrowse' style='text-align:center;margin-top:0px;'>图片加载中..." +
+    		"</div>"+
+            
+            
+           /* "<div id='list'>"+
                 "<div id='shishi' >" +
                    "<div class='slt' id='imgList'>"+
                    th+
                    "</div>"+
                 "</div>"+
-            "</div>"+
+            "</div>"+*/
                 "</div>");
+$(".right").hide();
+$("#mainPage").show();
+$("#imageBrowse").html(
+		"<img id='Ima"+page+"' width='80%' height='75%' style='text-align:center margin-top:1px' src='"+wsHost+lltpurl+"' alt='' />"
+);
     $(".right").hide();
     $("#mainPage").show(); 
+    $("#Ima"+page).click(function(){
+    	deleteIma1(objs.result[page].id);
+    });
     $("#bj").click(function(){
-    		var imas=[];
+    	pctj(objs);
+    	/*	var imas=[];
         	for(var aa=0;aa<objs.size;aa++){
     			imas+=objs.result[aa].id+",";
     		}
     		var target=imas;
     		var size="0";
-    		window.plugins.ImaList.send(testSuccess,testError, target,size);
+    		window.plugins.ImaList.send(testSuccess,testError, target,size);*/
     });
-    $(".images").on({ 
+  /*  $(".images").on({ 
         touchstart: function(e){
             timeOutEvent = setTimeout("longPress('"+$(this).attr("id")+"')",500);
             e.preventDefault();
@@ -428,16 +472,68 @@ $("#mainPage").html("<div class='title' '><img src='images/back.png' onclick='pc
             ImageId=imageurl;
             var size="1";
             window.plugins.ImaList.send(backsuccess,testError, imageurl,size);
+            
             } 
+            show_big(imageurl)
             return false; 
         }
-    });  
+    }); */
+    var nStartx, nStarty, nEndx, nEndy;
+    var dist = 100;
+    document.getElementById("imageBrowse").addEventListener("touchstart",
+               function (e) {
+                     nStartx = e.targetTouches[0].pageX;
+                     nStarty = e.targetTouches[0].pageY;
+                     console.log("touch start:" + nStartx + "," + nStarty);
+               });
+    document.getElementById("imageBrowse").addEventListener("touchend",
+              function (e) {
+                     nEndx = e.changedTouches[0].pageX;
+                     nEndy = e.changedTouches[0].pageY;
+                     console.log("touch end:" + nEndx + "," + nEndy);
+                     if(nEndx-nStartx>dist)   //向右滑动
+                     {
+                        //执行逻辑
+                   	  page=page-1; 
+                 		if(page>=0){
+                 			id=objs.result[page].id
+                 			lltpurl="/ipad/pccustormer/ckpcImageById.json?userId=0&id="+id;
+                 			$("#imageBrowse").html(
+                 					"<img id='Ima"+page+"' style='text-align:center' width='80%' height='75%' src='"+wsHost+lltpurl+"' alt=''/>"
+                 			);
+                 			  $("#Ima"+page).click(function(){
+                 					deleteIma1(objs.result[page].id);
+                 			    });
+                 		}else{
+                 			window.wxc.xcConfirm("当前已经是第一页", "info");
+                 			page = page+1;
+                 		}
+                     }
+                     else if(nStartx-nEndx>dist) //向左滑动
+                     {
+                        //执行逻辑
+                   	  page=page+1; 
+                 		if(page<objs.size){
+                 			id=objs.result[page].id
+                 			lltpurl="/ipad/pccustormer/ckpcImageById.json?userId=0&id="+id;
+                 			$("#imageBrowse").html(
+                 					"<img id='Ima"+page+"' width='80%' height='75%'  src='"+wsHost+lltpurl+"' alt=''/>"
+                 			);
+                 			  $("#Ima"+page).click(function(){
+                 					deleteIma1(objs.result[page].id);
+                 			    })
+                 		}else{
+                 			window.wxc.xcConfirm("当前已经是最后一页", "info");
+                 			page = page-1;
+                 		}
+                     }
+    });
 }});
+
 
 
 }
 var ImageId="";
-
 function backsuccess(data){
 	if(data.target=="1"){
 		var url=wsHost+"/ipad/pccustormer/deleteImage.json?id="+ImageId;
@@ -452,5 +548,122 @@ function backsuccess(data){
 		    	ImageId="";	
 		    }})
 	}
+}
+
+
+
+
+
+//影像资料
+function pctj(obj){
+	var page = 0;
+	var lltpurl;
+	var id;
+			 id=obj.result[0].id;
+			lltpurl="/ipad/pccustormer/ckpcImageById.json?userId=0&id="+id;
+			
+		
+	$("#mainPage").html("<div class='title'><img src='images/back.png' id='back'/>普查图集</div>"+
+			"<div class='content'>" +
+			"<div class='tabplace' id='imageBrowse' style='text-align:center;margin:0 auto;'>图片加载中..." +
+			"</div>"+
+	"</div>");
+	$(".right").hide();
+	$("#mainPage").show();
+	$("#imageBrowse").html(
+			"<img id ='images' width='80%' height='75%' style='text-align:center' src='"+wsHost+lltpurl+"' alt='' />"
+	);
+	  $("#back").click(function(){
+			pcxq1(ress);
+	  });
+
+	 var nStartx, nStarty, nEndx, nEndy;
+	 var dist = 100;
+	 document.getElementById("imageBrowse").addEventListener("touchstart",
+	            function (e) {
+	                  nStartx = e.targetTouches[0].pageX;
+	                  nStarty = e.targetTouches[0].pageY;
+	                  console.log("touch start:" + nStartx + "," + nStarty);
+	            });
+	 document.getElementById("imageBrowse").addEventListener("touchend",
+	           function (e) {
+	                  nEndx = e.changedTouches[0].pageX;
+	                  nEndy = e.changedTouches[0].pageY;
+	                  console.log("touch end:" + nEndx + "," + nEndy);
+	                  if(nEndx-nStartx>dist)   //向右滑动
+	                  {
+	                     //执行逻辑
+	                	  page=page-1; 
+	              		if(page>=0){
+	              			id=obj.result[page].id
+	              			lltpurl="/ipad/pccustormer/ckpcImageById.json?userId=0&id="+id;
+	              			$("#imageBrowse").html(
+	              					"<img id ='images' style='text-align:center' width='80%' height='75%' src='"+wsHost+lltpurl+"' alt=''/>"
+	              			);
+	              		}else{
+	              			window.wxc.xcConfirm("当前已经是第一页", "info");
+	              			page = page+1;
+	              		}
+	                  }
+	                  else if(nStartx-nEndx>dist) //向左滑动
+	                  {
+	                     //执行逻辑
+	                	  page=page+1; 
+	              		if(page<obj.size){
+	              			id=obj.result[page].id
+	              			lltpurl="/ipad/pccustormer/ckpcImageById.json?userId=0&id="+id;
+	              			$("#imageBrowse").html(
+	              					"<img id ='images' width='80%' height='75%'  src='"+wsHost+lltpurl+"' alt=''/>"
+	              			);
+	              		}else{
+	              			window.wxc.xcConfirm("当前已经是最后一页", "info");
+	              			page = page-1;
+	              		}
+	                  }
+	 });
+		}
+function show_big(id){//点击放大
+	lltpurl=wsHost+"/ipad/pccustormer/ckpcImageById.json?userId=0&id="+id;
+	 $("#text").html("<div class='display-div sdhtz' style='width:80%;margin-top:20px;left:10%;'>"+
+             "<div class='dialog-head'>"+
+                "<h4>查看大图</h4>"+
+             "</div>"+
+             "<div class='dialog-content' width='80%' height='50%'><img src='"+lltpurl+"' style='width='80%' height='50%''/></div>"+
+             "<div class='dialog-content'>"+
+                "您确定删除这张照片吗？"+
+             "</div>"+
+             "<div class='dialog-bottom'>"+
+                "<button type='button' class='btn btn-default' onclick='hide_dcts()'>取消</button>"+
+                "<button type='button' class='btn btn-danger' id='sure'>确定</button>"+
+             "</div>"+
+         "</div>");
+$("#text").animate({top:"0px"},"500");
+$("#sure").click(function(){
+	var url=wsHost+"/ipad/pccustormer/deleteImage.json?id="+id;
+	$.ajax({
+	    url:url,
+	    type: "GET",
+	    dataType:'json',
+	    success: function (json) {
+	    	var objs = $.evalJSON(json);
+	    	alert(objs.result);
+	    	pcxq1(ress);
+	    	hide_dcts();
+	    }});
+});
 	
+	
+	
+	
+	
+	
+	
+/*    $("#text").html("<div class='display-div sdhtz' style='width:80%;margin-top:50px;left:10%;'>"+
+                        "<div class='dialog-head'>"+
+                           "<h4>查看大图</h4>"+
+                           "<img src='images/sdhClose.jpg' onclick='hide_dcts()'/>"+
+                        "</div>"+
+                        "<div class='dialog-content' style='max-height:580px'><img src='"+imgSRC+"' style='width:100%;'/></div>"+
+                    "</div><!-- /display-div -->");
+    $("#text").animate({top:"0px"},"500");*/
 }
