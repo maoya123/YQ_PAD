@@ -63,6 +63,7 @@ p.Left{text-align:left;}
 /*<!--����-->*/
 .title{position:fixed;z-index:20;top:63px;width:100%;padding-left:30px;background:#0bb8ce;color:#fff;font-size:20px;font-weight:bold;line-height:63px;}
 .content{margin-top:136px;padding-bottom:50px;}
+.contenttt{margin-top:1px;padding-bottom:50px;}
 .contents{display:table-cell;vertical-align:middle;}
 .title img{vertical-align:middle;margin-right:10px;}
 .title .Right{position:fixed;top:96px;right:10px;}
