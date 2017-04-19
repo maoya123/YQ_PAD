@@ -1,4 +1,4 @@
-function wzxx(){
+function mymap(){
 	var gxwzUrl = "/ipad/pccustormer/selectBmRy.json?userId="+window.sessionStorage.getItem("userId");
 	var tmp='';
     
@@ -144,7 +144,7 @@ function mapIts(position){
 
 //单次位置请求执行的函数              
 function getLocation(){ 
-	navigator.geolocation.getCurrentPosition(mapIt,locationError); 
+	window.plugins.GetLocationOffline.startActivity(getsuccess,null,"","get");
 } 
 //定位成功时，执行的函数 
 /*function mapIt(position){  
@@ -186,9 +186,9 @@ function getLocation(){
    
 } */
 
-function mapIt(position){  
-     lon = position.coords.longitude; 
-        lat = position.coords.latitude; 
+function getsuccess(position){  
+	lon=position.Longitude;
+	lat=position.Latitude;
     var map = new BMap.Map("allmap"); 
     var point = new BMap.Point(""+lon+"",""+lat+""); 
     map.centerAndZoom(point,19); 
@@ -241,7 +241,6 @@ function locationError(error)
 	} 
 } 
 function showInformation(marker,updatetime,point,map){
-	alert(updatetime);
 	 var gc = new BMap.Geocoder(); 
 	 marker.addEventListener("click", function(){
 			 gc.getLocation(point, function(rs){ 
