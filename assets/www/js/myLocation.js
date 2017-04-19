@@ -200,26 +200,23 @@ function pushposition(){
 			})
 	}
 }
-var dlzb="";
+/*var dlzb="";
 function pushposition1(){
+	
 	window.plugins.GetLocationOffline.startActivity(getsuccess,null,"","get");
 	function getsuccess(position){
+		
 		pushlon=position.Longitude;
 		pushlat=position.Latitude;
 		var dt=position.Latitude+","+position.Longitude;
-		alert(dt);
 		var url="http://api.map.baidu.com/geocoder/v2/?ak=C93b5178d7a8ebdb830b9b557abce78b&callback=renderReverse&location="+dt+"&output=json&pois=0";
-		alert(url);
 		$.ajax({ 
 			type: "GET", 
 			dataType: "jsonp", 
 			url: url, 
 			success: function (json) { 
-				alert(json);
-				alert(json.result.formatted_address);
-				alert(json.result.sematic_description);
 			if(json.status==0){ 
-			alert(json.result.formatted_address+json.result.sematic_description); 
+			alert("您所在地址为:"+json.result.formatted_address+json.result.sematic_description); 
 			dlzb=json.result.formatted_address+json.result.sematic_description;
 			} 
 			}, 
@@ -227,8 +224,7 @@ function pushposition1(){
 		}
 			}); 
 	}
-}
-
+}*/
 
 
 

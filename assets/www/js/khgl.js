@@ -19,6 +19,7 @@ function testSuccess(){
 
 };
 function testError(){
+	alert('读取失败!!!');
 };
 //新建客户
 function newUser(){
@@ -145,7 +146,7 @@ function pclr(){
 					  "<p>"+
 					  "<input type='button' class='btn btn-primary btn-large' value='上一页' id='syy'/>"+
 						"<input type='button' class='btn btn-primary btn-large' value='下一页' id='xyy'/>"+
-                      "<input type='button' class='btn btn-primary btn-large' value='新增普查' onclick='xzpc1()'/>"+
+                      "<input type='button' class='btn btn-primary btn-large' value='新增普查' onclick='pushposition1()'/>"+
 						"<input type='button' class='btn btn-primary btn-large' value='查看详情' id='findpc'/>"+
                   "</p>"+  
 			"</div>");
@@ -189,17 +190,55 @@ function pclr(){
 		}
 	})
 }
-
-var cardId="";
-function xzpc1(){
-	pushposition1();
+//扫描成功
+function pushposition1(){
+	$("#mainPage").html("<div class='title'>正在定位.........</div>"+  
+			"</div>"+
+			"<div class='contents' id='allmap'  style='text-align:center;height:580px;margin:auto auto;'>" +
+			"<div class='spinner'>"+
+			"<div class='bounce1'></div>"+
+			"<div class='bounce2'></div>"+
+			"<div class='bounce3'></div>"+
+			"</div>"+
+			"</div>"+
+			"</div>");
+	window.plugins.GetLocationOffline.startActivity(getsuccess,null,"","get");
+	function getsuccess(position){
+		pushlon=position.Longitude;
+		pushlat=position.Latitude;
+		var dt=position.Latitude+","+position.Longitude;
+		var url="http://api.map.baidu.com/geocoder/v2/?ak=C93b5178d7a8ebdb830b9b557abce78b&callback=renderReverse&location="+dt+"&output=json&pois=0";
+		$.ajax({ 
+			type: "GET", 
+			dataType: "jsonp", 
+			url: url, 
+			success: function (json) { 
+			if(json.status==0){ 
+			//alert("您所在地址为:"+json.result.formatted_address+json.result.sematic_description); 
+				var dlzb=json.result.formatted_address+json.result.sematic_description;
+				alert("您所在地址为:"+dlzb);
+				//取扫描的值
+				xzpc1(dlzb);
+			} 
+			}, 
+			error: function (XMLHttpRequest, textStatus, errorThrown) { 
+		}
+			}); 
+	}
+}
+//扫描身份证
+function smIdCard(){
+	var size=0;
+	   window.plugins.PluginIDCapture.crop(pushposition1,testError,size);
+}
+function xzpc1(dlzb){
 	window.scrollTo(0,0);//滚动条回到顶端
 	$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='pclr()'/>客户管理-普查录入-新增普查</div>"+  
 						"<div class='content'>" +
 						    "<div class='jjstep'>" +
-	    					    "<div class='step1'>录入基本信息</div>"+
-	                            "<div class='step2'>影像上传</div>"+
-	                            "<input type='button' class='btn btn-primary btn-large next' value='下一步' id='next'/>"+
+	    					    "<div class='step2'>录入基本信息</div>"+
+	                            //"<div class='step2'>影像上传</div>"+
+	                            "<input type='button' class='btn btn-primary btn-large next' value='保存' id='next'/>"+
 						    "</div><div class='myline'></div>"+
 							"<div class='bottom-content'>"+
 								"<table class='cpTable' style='margin-top:20px;'>"+
@@ -229,17 +268,39 @@ function xzpc1(){
 										"<td colspan='3'><input type='text' class='long' id='hy' value=''/></td>"+
 									"</tr>"+
 								"</table>"+
-								"<p><img src='images/ugc_icon_type_photo.png' onclick='capture(\"fcz_sheet1\",\"img\");'/></p>"+
+								"<p><img src='images/ugc_icon_type_photo.png' onclick='capture(\"qtyxzl_sheet1\",\"img\",\"imageuri\",\"1\",\""+name+ "\");'/>"+
+								"<input type='hidden' id='sure'>"+
+								"<input type='hidden' id='qtyxzl_sheet1' name='imageuri' uri='' class='readonly' readonly='readonly'/><input type='hidden' class='btn' onclick='getMedia(\"qtyxzl_sheet1\",\"img\",\"imageuri\",\"1\");' value='选择文件'/></p>"+
 							"</div>"+          
 						"</div>");
 	    $(".right").hide();
 	    $("#mainPage").show();
+		$("#sure").click(function(){
+			window.wxc.xcConfirm("是否开始上传影像资料","confirm",{onOk:scks});
+			function scks(){
+				var applicationId = null;
+				show_upload(0);
+					var j=1;
+					var fileName = $("#qtyxzl_sheet"+j).val();
+					var fileURI = document.getElementsByName("imageuri")[0].getAttribute("uri");
+					if(fileName!=""&&fileURI!=""){
+						var options = new FileUploadOptions();  
+						options.fileKey = "file";  
+						options.fileName = fileName; 
+						options.mimeType = "multipart/form-data";  
+						options.chunkedMode = false;  
+						ft = new FileTransfer(); 
+						var uploadUrl=encodeURI(wsHost+"/ipad/pccustormer/imagepcImport.json?cardid="+$("#cardid").val()+"&userId="+window.sessionStorage.getItem("userId")+"&fileName="+options.fileName);  
+						$("#uploadInfo").html("正在上传"+(1)+"张照片，请稍后...");
+						ft.upload(fileURI,uploadUrl,uploadSuccess, uploadFailed, options); 
+						uploadlock=false;
+					}
+			}
+		});
 		$("#next").click(function() {
-			alert("123");
 			var sdrwurl= "/ipad/pccustormer/insertPCustomer.json";
 			var userId = window.sessionStorage.getItem("userId");
 			var name=$("#khmc").val();
-			alert(name);
 			var cardid=$("#cardid").val();
 			var sfzdz=$("#sfzdz").val();
 			var dpdz=$("#dpdz").val();
@@ -261,9 +322,7 @@ function xzpc1(){
 		        success: function (json) {
 		        	var objs = $.evalJSON(json);
 		        	if(objs.result=="1"){
-		        		dlzb="";
-		        		cardId=cardid;
-		        		 xzpc2(cardid,name);
+		        		pclr();
 		        	}else if(objs.result=="0"){
 		        		alert("添加失败");
 		        	}else{
@@ -273,7 +332,6 @@ function xzpc1(){
 			})
 		});
 	}
-
 
 
 //普查录入-影像上传
@@ -300,10 +358,7 @@ $("#mainPage").html("<div class='title'><img src='images/back.png' onclick='xzpc
 						"<td><img src='images/ugc_icon_type_photo.png' onclick='capture(\"qtyxzl_sheet1\",\"img\",\"imageuri\",\"1\",\""+name+ "\");'/></td>"+
 						"</tr>"+
 						"</table>"+
-							"<p class='Left'>" +
-								"<button class='add-button' onclick='addTd(\"fcz\")'><img src='images/add.png'/></button>" +
-								"<button class='add-button' onclick='removeTd(\"fcz\")'><img src='images/del.png'/></button>" +
-							"</p>"+
+							
 						"</div>"+         
 					"</div>");
     $(".right").hide();

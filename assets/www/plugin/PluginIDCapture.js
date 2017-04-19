@@ -1,4 +1,4 @@
-var PluginIDCapture = function() {
+/*var PluginIDCapture = function() {
 };
 PluginIDCapture.prototype.crop = function (name, win, fail){
    console.log("Prima di execute!");
@@ -6,4 +6,4 @@ PluginIDCapture.prototype.crop = function (name, win, fail){
   };
 PhoneGap.addConstructor(function() {
  PhoneGap.addPlugin('PluginIDCapture',new PluginIDCapture());
-});
+});*/

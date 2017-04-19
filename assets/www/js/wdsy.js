@@ -19,7 +19,7 @@ function mywdsy(){
 	function initCustManagerContentCallback(json){
 		var objs = $.evalJSON(json);
 		var im="<div class='box wdsy4' onclick='tz()'><img src='images/tz.png'/><span>通知</span></div>";
-		var locationType="<div class='box wdsy5' onclick ='wzxx()'><img src='images/wdzj.png'/><span>位置信息</span></div>";
+		var locationType="<div class='box wdsy5' onclick ='mymap()'><img src='images/wdzj.png'/><span>位置信息</span></div>";
 		var gett = crud.dom.factory("GETT");
 		wsNotifiyMessage ="/ipad/custAppInfo/notifiyMessageNum.json";
 		var url = wsNotifiyMessage+"?userId="+window.sessionStorage.getItem("userId")+"&userType="+window.sessionStorage.getItem("userType");
