@@ -26,6 +26,7 @@
                      </span>
                      <!--/错误信息提示--> 
                      <input type='button' class='login_btn' value='登  录' onclick='dl()'>
+                   <!--   <a href="map.html">查看</a> -->
                  </div>
              </form>
          </div>
@@ -95,6 +96,7 @@
 <script src="js/jquery.json-2.3.js"></script>
 <script src="js/myzb.js"></script>
 <script src="js/myLocation.js"></script>
+<script src="js/zxbamap.js"></script>
 <script src="js/getLocationOnline.js"></script>
 
 
@@ -110,9 +112,10 @@
 <script type="text/javascript" src="confirm/js/xcConfirm.js"></script>
 <script type="text/javascript" src="js/GpsToBd09llPlugin.js"></script>
 
-<!-- <script type="text/javascript" src="mapjs/api_v2.0.js"></script>
-<script type="text/javascript" src="mapjs/convertor.js"></script>  -->
-<script type="text/javascript" src="map/baidumapv2/baidumap_offline_v2_load.js"></script>
+ <script type="text/javascript" src="mapjs/api_v2.0.js"></script>
+ <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=C93b5178d7a8ebdb830b9b557abce78b"></script> 
+  <script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script> 
+<!-- <script type="text/javascript" src="map/baidumapv2/baidumap_offline_v2_load.js"></script> -->
 <script type="text/javascript" charset="utf-8" >
 $(function(){
 $(document).click(function(){
@@ -219,7 +222,7 @@ function getMedia(id,type,name,num) {
 					var url = document.getElementById(idtmp);
 					var lll= document.getElementsByName("imageuri")[num-1].setAttribute("uri",URI);
 					url.value = values[values.length-1];
-					$("#sure").click()
+					 $("#sure").click()
 					//alert(json);
 				}
 				function testError(){

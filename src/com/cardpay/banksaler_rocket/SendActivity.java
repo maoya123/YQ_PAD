@@ -1,6 +1,9 @@
 package com.cardpay.banksaler_rocket;
 
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -15,6 +18,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,7 +38,7 @@ import android.widget.Toast;
 public class SendActivity extends Activity implements  android.view.GestureDetector.OnGestureListener{
 private ArrayList<View> pageview;
 List list =new ArrayList();
-private  String ImaURL="http://192.168.191.1:8080/PCCredit/ipad/pccustormer/ckpcImageById.json?id=";
+private  String ImaURL="http://192.168.191.1:8080/PCCredit/ipad/pccustormer/ckpcImageById.json?userId=0&id=";
 ImageView images;
 //定义手势检测器实例
 	GestureDetector detector;
@@ -58,7 +62,7 @@ ImageView images;
         	 list.add(imagesUrl[a]) ;
          }
         String imageUrl=(String) list.get(0);
-        Picasso.with(this).load(ImaURL+imageUrl)
+       Picasso.with(this).load(ImaURL+imageUrl).resize(50,50)
         .into(images);
         //创建手势检测器
         detector = new GestureDetector(this,this);
@@ -240,6 +244,15 @@ ImageView images;
 	
 		return false;
 	}
+	public static void ShowImg(String uri, ImageView iv) throws IOException {    
+        FileInputStream fs = new FileInputStream(uri); 
+        BufferedInputStream bs = new BufferedInputStream(fs); 
+        Bitmap btp = BitmapFactory.decodeStream(bs); 
+        iv.setImageBitmap(btp); 
+        bs.close(); 
+        fs.close(); 
+        btp = null;      
+}
 
 
 }
