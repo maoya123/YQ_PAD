@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.cardpay.banksaler_rocket.ImageFilter;
 import com.googlecode.tesseract.android.TessBaseAPI;
+import com.googlecode.tesseract.android.TessBaseAPI.PageSegMode;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -99,9 +100,12 @@ public class TessTwo {
     
     public static String getText(Bitmap bitmap){
 		TessBaseAPI baseApi = new TessBaseAPI();  
+		baseApi.setPageSegMode(PageSegMode.PSM_SINGLE_LINE);
+        baseApi.setVariable("classify_bln_numeric_mode", "1");
         baseApi.init(TESSBASE_PATH, LANG_ZH);  
-
         Bitmap bitmapGray =  ImageFilter.grayScaleImage(bitmap);// 图片灰度化 
+        //Util.storeBitmapToStorage(context, bitmapGray)
+        bitmapGray = ImageFilter.gray2Binary(bitmapGray);
         baseApi.setImage(bitmapGray);   
         
         final String outputText = baseApi.getUTF8Text();    

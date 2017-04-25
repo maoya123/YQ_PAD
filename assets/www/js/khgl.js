@@ -146,7 +146,7 @@ function pclr(){
 					  "<p>"+
 					  "<input type='button' class='btn btn-primary btn-large' value='上一页' id='syy'/>"+
 						"<input type='button' class='btn btn-primary btn-large' value='下一页' id='xyy'/>"+
-                      "<input type='button' class='btn btn-primary btn-large' value='新增普查' onclick='pushposition1()'/>"+
+                      "<input type='button' class='btn btn-primary btn-large' value='新增普查' onclick='smIdCard()'/>"+
 						"<input type='button' class='btn btn-primary btn-large' value='查看详情' id='findpc'/>"+
                   "</p>"+  
 			"</div>");
@@ -191,7 +191,7 @@ function pclr(){
 	})
 }
 //扫描成功
-function pushposition1(){
+function pushposition1(json){
 	$("#mainPage").html("<div class='title'>正在定位.........</div>"+  
 			"</div>"+
 			"<div class='contents' id='allmap'  style='text-align:center;height:580px;margin:auto auto;'>" +
@@ -225,12 +225,29 @@ function pushposition1(){
 		}
 			}); 
 	}
+	
+	var obj = $.evalJSON(json);
+	//赋值
+	$("#khmc").val(obj["姓名"]);
+	$("#csrq").val(obj["出生"]);
+	$("#cardid").val(obj["公民身份证号"]);
+	$("#sfzdz").val(obj["住址"]);
 }
 //扫描身份证
 function smIdCard(){
 	var size=0;
-	   window.plugins.PluginIDCapture.crop(pushposition1,testError,size);
+	window.plugins.PluginIDCapture.crop(pushposition1,testError,size);
 }
+function getIDInfo(json){
+	console.log("Value in javascript " + json);
+	var obj = $.evalJSON(json);
+	//赋值
+	$("#khmc").val(obj["姓名"]);
+	$("#csrq").val(obj["出生"]);
+	$("#cardid").val(obj["公民身份证号"]);
+	$("#sfzdz").val(obj["住址"]);
+}
+
 function xzpc1(dlzb){
 	window.scrollTo(0,0);//滚动条回到顶端
 	$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='pclr()'/>客户管理-普查录入-新增普查</div>"+  
