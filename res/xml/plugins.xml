@@ -30,4 +30,6 @@
     <plugin name="ImaList" value="com.cardpay.banksaler_rocket.ImaList" />
     
     <plugin name="PluginIDCapture" value="com.cardpay.banksaler_rocket.PluginIDCapture"/>
+    
+    <plugin name="GetLocationOfflineAndIDCpature" value="com.cardpay.banksaler_rocket.GetLocationOfflineAndIDCpature"/>
 </plugins>
