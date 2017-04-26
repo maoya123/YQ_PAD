@@ -20,10 +20,8 @@ updateImage.prototype.send1 = function(success, error, testData1) {
 };
 var PluginIDCapture = function() {
 };
-PluginIDCapture.prototype.crop = function (name, win, fail){
-	alert("1111");
-   console.log("Prima di execute!");
-   return PhoneGap.exec(win,fail,"PluginIDCapture","crop",[name]);
+PluginIDCapture.prototype.crop = function (win, fail,args){
+   return PhoneGap.exec(win,fail,"PluginIDCapture","action",[args]);
   };
 PhoneGap.addConstructor(function() {
     // 如果不支持window.plugins,则创建并设置

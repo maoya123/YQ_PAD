@@ -146,7 +146,7 @@ function pclr(){
 					  "<p>"+
 					  "<input type='button' class='btn btn-primary btn-large' value='上一页' id='syy'/>"+
 						"<input type='button' class='btn btn-primary btn-large' value='下一页' id='xyy'/>"+
-                      "<input type='button' class='btn btn-primary btn-large' value='新增普查' onclick='smIdCard()'/>"+
+                      "<input type='button' class='btn btn-primary btn-large' value='新增普查' onclick='pushposition1()'/>"+
 						"<input type='button' class='btn btn-primary btn-large' value='查看详情' id='findpc'/>"+
                   "</p>"+  
 			"</div>");
@@ -191,7 +191,7 @@ function pclr(){
 	})
 }
 //扫描成功
-function pushposition1(json){
+function pushposition1(){
 	$("#mainPage").html("<div class='title'>正在定位.........</div>"+  
 			"</div>"+
 			"<div class='contents' id='allmap'  style='text-align:center;height:580px;margin:auto auto;'>" +
@@ -202,8 +202,9 @@ function pushposition1(json){
 			"</div>"+
 			"</div>"+
 			"</div>");
-	window.plugins.GetLocationOffline.startActivity(getsuccess,null,"","get");
+	window.plugins.GetLocationOfflineAndIDCpature.startActivity(getsuccess,null,"","getAndIDCapture");
 	function getsuccess(position){
+		//alert(position);
 		pushlon=position.Longitude;
 		pushlat=position.Latitude;
 		var dt=position.Latitude+","+position.Longitude;
@@ -216,9 +217,11 @@ function pushposition1(json){
 			if(json.status==0){ 
 			//alert("您所在地址为:"+json.result.formatted_address+json.result.sematic_description); 
 				var dlzb=json.result.formatted_address+json.result.sematic_description;
-				alert("您所在地址为:"+dlzb);
+				//alert("您所在地址为:"+dlzb);
 				//取扫描的值
-				xzpc1(dlzb);
+				//alert(position.idinfo);
+				var obj = $.evalJSON(position.idinfo);
+				xzpc1(dlzb,obj);
 			} 
 			}, 
 			error: function (XMLHttpRequest, textStatus, errorThrown) { 
@@ -233,7 +236,6 @@ function pushposition1(json){
 	$("#csrq").val(obj["出生"]);
 	$("#cardid").val(obj["公民身份证号"]);
 	$("#sfzdz").val(obj["住址"]);
-}
 }
 //扫描身份证
 function smIdCard(){
@@ -250,7 +252,7 @@ function getIDInfo(json){
 	$("#sfzdz").val(obj["住址"]);
 }
 
-function xzpc1(dlzb){
+function xzpc1(dlzb,obj){
 	window.scrollTo(0,0);//滚动条回到顶端
 	$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='pclr()'/>客户管理-普查录入-新增普查</div>"+  
 						"<div class='content'>" +
@@ -266,17 +268,17 @@ function xzpc1(dlzb){
 									"</tr>"+
 									"<tr>"+    
 										"<th style='width:15%'>客户名称</th>"+
-										"<td style='width:35%'><input type='text' id='khmc' value=''/></td>"+
+										"<td style='width:35%'><input type='text' id='khmc' value='"+obj["姓名"]+"'/></td>"+
 										"<th style='width:15%'>出生日期</th>"+
-										"<td style='width:35%'><input type='text' id='csrq' value=''/></td>"+
+										"<td style='width:35%'><input type='text' id='csrq' value='"+obj["出生"]+"'/></td>"+
 									"</tr>"+
 									"<tr>"+    
 										"<th>身份证号码</th>"+
-										"<td colspan='3'><input type='text' class='long' id='cardid' value=''/></td>"+
+										"<td colspan='3'><input type='text' class='long' id='cardid' value='"+obj["公民身份证号"]+"'/></td>"+
 									"</tr>"+
 									"<tr>"+    
 										"<th>身份证地址</th>"+
-										"<td colspan='3'><input type='text' class='long' id='sfzdz' value=''/></td>"+
+										"<td colspan='3'><input type='text' class='long' id='sfzdz' value='"+obj["住址"]+"'/></td>"+
 									"</tr>"+
 									"<tr>"+    
 										"<th>店铺（家庭）地址</th>"+
