@@ -1,7 +1,6 @@
 package com.cardpay.banksaler_rocket;
 
 //import Utils.OpenCVLoader;
-import AliyunApi.Sender;
 import Utils.Util;
 import android.app.Activity;
 import android.content.Context;
@@ -231,11 +230,9 @@ public class PluginIDCaptureTanwhActivity extends Activity implements
 					ByteArrayOutputStream cropStream = new ByteArrayOutputStream();
 					cropBtimap.compress(Bitmap.CompressFormat.JPEG, 100,
 							cropStream);
-					String path = Util.storeBitmapToStorage(context,cropBtimap).getPath();//saveImage(cropBtimap);
-					//intentNew.putExtra(Util.EXTRA_IDCARD, path);
-					String idinfo = new Sender().send(path);
-					//intentNew.putExtra(Util.EXTRA_ID_PATH, idpath);
-					intentNew.putExtra(Util.EXTRA_ID_INFO, idinfo);
+					//String path = Util.storeBitmapToStorage(context,cropBtimap).getPath();//saveImage(cropBtimap);
+					String path = saveImage(cropBtimap);
+					intentNew.putExtra(Util.EXTRA_IDCARD, path);
 					//getText(cropBtimap);
 
 				} catch (IOException e) {

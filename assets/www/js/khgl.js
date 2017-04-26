@@ -225,7 +225,8 @@ function pushposition1(json){
 		}
 			}); 
 	}
-	
+
+
 	var obj = $.evalJSON(json);
 	//赋值
 	$("#khmc").val(obj["姓名"]);
@@ -233,13 +234,14 @@ function pushposition1(json){
 	$("#cardid").val(obj["公民身份证号"]);
 	$("#sfzdz").val(obj["住址"]);
 }
+}
 //扫描身份证
 function smIdCard(){
-	var size=0;
-	window.plugins.PluginIDCapture.crop(pushposition1,testError,size);
+	window.plugins.PluginIDCapture.crop("",pushposition1,testError);
 }
 function getIDInfo(json){
-	console.log("Value in javascript " + json);
+	alert(json)
+	//console.log("Value in javascript " + json);
 	var obj = $.evalJSON(json);
 	//赋值
 	$("#khmc").val(obj["姓名"]);

@@ -30,14 +30,14 @@ public class Sender {
 				byte[] buffer = new byte[(int) file.length()];
 				inputFile.read(buffer);
 				inputFile.close();
-				encodedString = Base64.encodeToString(buffer, Base64.DEFAULT);
+				encodedString = Base64.encodeToString(buffer, Base64.NO_WRAP);
 				//Log.e(TAG, "Base64---->" + encodedString);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 			String bodys = "{\"photo\":\"" + encodedString + "\"}";
-
+			Log.i(TAG, "Base64---->" + encodedString);
 			String response = HttpUtils.submitPostData(host, bodys);
 			// System.out.println(response.toString());
 			return convertUnicode(response.toString());

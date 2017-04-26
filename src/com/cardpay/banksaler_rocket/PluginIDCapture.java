@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import com.phonegap.api.Plugin;
 import com.phonegap.api.PluginResult;
 
+import AliyunApi.Sender;
 import Utils.Util;
 import android.content.Intent;
 import android.os.Handler;
@@ -47,12 +48,21 @@ public class PluginIDCapture extends Plugin {
 		super.onActivityResult(requestCode, resultCode, intent);
 		if (requestCode == 0) {
 			//String msg = intent.getStringExtra(Util.EXTRA_ID_PATH) + "###" + intent.getStringExtra(Util.EXTRA_FACE_PATH);
-			String msg = intent.getStringExtra(Util.EXTRA_ID_INFO);
-			Log.v("FLAG", "IN WRAPPER " + msg);
+			final String msg = intent.getStringExtra(Util.EXTRA_IDCARD);
+			Log.i("FLAG", "IN WRAPPER " + msg);
 			resultFunction = msg;
 			
-			super.onActivityResult(requestCode, resultCode, intent);
-			weakup();
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					String idinfo = new Sender().send(msg);
+					Log.i("idinfo", idinfo);
+					resultFunction = idinfo;
+					
+					weakup();
+				}
+			}).start();
+			
 		}
 	}
 	
