@@ -1,5 +1,6 @@
 package com.cardpay.banksaler_rocket;
 
+import AliyunApi.Sender;
 import Utils.FaceDetector;
 import Utils.OpenCVLoader;
 import Utils.TessTwo;
@@ -292,7 +293,7 @@ public class PluginIDCaptureActivity extends Activity implements
 							cropStream);
 					saveImage(cropBtimap);
 
-					getText(cropBtimap);
+					//getText(cropBtimap);
 
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -380,29 +381,32 @@ public class PluginIDCaptureActivity extends Activity implements
 
 				mHt.quit();
 
-				// Util.idcard = mLastFrame;
+				Util.idcard = mLastFrame;
+				Util.storeBitmapToStorage(context,Util.idcard);
 				// intentNew.putExtra(EXTRA_FACE, mLastFrameFace);
 				// Util.textBitmap = mLastFrameText;
 				Util.idBitmap = mLastFrameNumber;
-				intentNew.putExtra(Util.EXTRA_ID, Util.idBitmap);
-				// Util.storeBitmapToStorage(context,Util.idcard);
+				//intentNew.putExtra(Util.EXTRA_ID, Util.idBitmap);
 				// Util.storeBitmapToStorage(context,Util.textBitmap);
 				
 				String idpath = Util.storeBitmapToStorage(context,Util.idBitmap).getPath();
-				intentNew.putExtra(Util.EXTRA_ID_PATH, idpath);
+				String idinfo = new Sender().send(idpath);
+				//intentNew.putExtra(Util.EXTRA_ID_PATH, idpath);
+				intentNew.putExtra(Util.EXTRA_ID_INFO, idinfo);
 				
-				String facepath = Util.storeBitmapToStorage(context,mLastFrameFace).getPath();
-				intentNew.putExtra(Util.EXTRA_FACE_PATH, facepath);
+				//String facepath = Util.storeBitmapToStorage(context,mLastFrameFace).getPath();
+				//intentNew.putExtra(Util.EXTRA_FACE_PATH, facepath);
 				
 				//异步识别
+				/*
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
 						final String str = TessTwo
-								.parseImageToString(Util.idBitmap);
+								.getText(Util.idBitmap);
 					}
 				}).start();
-
+				*/
 				if (getParent() == null) {
 					setResult(RESULT_OK, intentNew);
 				} else {

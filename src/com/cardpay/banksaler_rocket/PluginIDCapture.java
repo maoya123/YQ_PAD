@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import com.phonegap.api.Plugin;
 import com.phonegap.api.PluginResult;
 
+import AliyunApi.Sender;
 import Utils.Util;
 import android.content.Intent;
 import android.os.Handler;
@@ -33,7 +34,7 @@ public class PluginIDCapture extends Plugin {
 			case 1:
 				try {
 					Log.v("START", "START");
-					Intent intent = new Intent(ctx, PluginIDCaptureActivity.class);
+					Intent intent = new Intent(ctx, PluginIDCaptureTanwhActivity.class);
 					ctx.startActivityForResult(PluginIDCapture.this, intent, 0);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,12 +47,22 @@ public class PluginIDCapture extends Plugin {
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 		if (requestCode == 0) {
-			String msg = intent.getStringExtra(Util.EXTRA_ID_PATH) + "###" + intent.getStringExtra(Util.EXTRA_FACE_PATH);
-			Log.v("FLAG", "IN WRAPPER " + msg);
+			//String msg = intent.getStringExtra(Util.EXTRA_ID_PATH) + "###" + intent.getStringExtra(Util.EXTRA_FACE_PATH);
+			final String msg = intent.getStringExtra(Util.EXTRA_IDCARD);
+			Log.i("FLAG", "IN WRAPPER " + msg);
 			resultFunction = msg;
 			
-			super.onActivityResult(requestCode, resultCode, intent);
-			weakup();
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					String idinfo = new Sender().send(msg);
+					Log.i("idinfo", idinfo);
+					resultFunction = idinfo;
+					
+					weakup();
+				}
+			}).start();
+			
 		}
 	}
 	

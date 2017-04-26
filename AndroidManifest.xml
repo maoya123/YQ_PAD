@@ -85,6 +85,7 @@
         </activity>
 	
         <activity android:name="PluginIDCaptureActivity"></activity>
+        <activity android:name="PluginIDCaptureTanwhActivity"></activity>
     </application>
 
 </manifest>

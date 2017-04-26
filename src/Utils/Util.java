@@ -34,6 +34,7 @@ public class Util {
     public static String EXTRA_FACE_PATH = "idcard_face_bitmap_path";
     public static String EXTRA_ID = "idcard_id_bitmap";
     public static String EXTRA_ID_PATH = "idcard_id_bitmap_path";
+    public static String EXTRA_ID_INFO = "idcard_id_info";
     
     public static Bitmap idcard;
     // 黑白照片

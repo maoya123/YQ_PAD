@@ -20,6 +20,7 @@
    			console.log("Value in javascript " + r);
    			document.getElementById("id_img").src = r.split("###")[0];
    			document.getElementById("face_img").src = r.split("###")[1];
+   			//document.getElementById("id_img").src = r;
    		},
 		function(e){console.log("NO");}
      );         
@@ -31,6 +32,5 @@
 <h1>Hello World</h1>
 <button onclick="getStart();">Start</button><br>
 <img id="id_img"/><br>
-<img id="face_img"/><br>
 </body>
 </html>
