@@ -31,8 +31,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 
-import com.googlecode.tesseract.android.TessBaseAPI;
-
 public class PluginIDCaptureTanwhActivity extends Activity implements
 		UncaughtExceptionHandler, OnClickListener {
 	private static final String TAG = PluginIDCaptureTanwhActivity.class
@@ -200,7 +198,7 @@ public class PluginIDCaptureTanwhActivity extends Activity implements
 					android.hardware.Camera.getCameraInfo(0, info);
 					matrix.postRotate(info.orientation);
 					// matrix.postScale(difW,difH);
-
+					matrix.preScale(0.3f, 0.3f);
 					Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0,
 							data.length);
 
@@ -249,20 +247,7 @@ public class PluginIDCaptureTanwhActivity extends Activity implements
 		});
 	}
 
-	private String getText(Bitmap cropBtimap) {
-		TessBaseAPI baseApi = new TessBaseAPI();
-		File appDir = new File(TESSBASE_PATH);
-		Log.i("appDir", appDir.getAbsolutePath());
-		baseApi.init(appDir.getAbsolutePath(), CHINESE_LANGUAGE);
-
-		Bitmap bitmapGray = ImageFilter.grayScaleImage(cropBtimap);// 图片灰度化
-		baseApi.setImage(bitmapGray);
-
-		final String outputText = baseApi.getUTF8Text();
-		Log.i("号码是", outputText);
-		baseApi.end();
-		return outputText;
-	}
+	
 
 	private String saveImage(Bitmap bmp) {
 		File appDir = new File(Environment.getExternalStorageDirectory(),

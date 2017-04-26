@@ -9,13 +9,6 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
-
-import com.googlecode.tesseract.android.TessBaseAPI;
-
-import org.opencv.android.Utils;
-import org.opencv.core.Mat;
-import org.opencv.core.Rect;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -91,21 +84,6 @@ public class Util {
         }).start();
 
         return file;
-    }
-
-    public static Bitmap cvtMat2Bitmap(Mat src) {
-        Bitmap bmp = Bitmap.createBitmap(src.cols(), src.rows(), Bitmap.Config.ARGB_8888);
-        Utils.matToBitmap(src, bmp);
-
-        return bmp;
-    }
-
-    public static Mat getMatFromRect(Mat src, Rect rect){
-        return new Mat(src, rect);
-    }
-
-    public static Bitmap getBitmapFromRect(Mat src, Rect rect){
-        return cvtMat2Bitmap(getMatFromRect(src, rect));
     }
 
 
