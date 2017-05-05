@@ -26,6 +26,7 @@ function mymap(){
  	);
  	$(".right").hide();
  	$("#mainPage").show();
+
  		startGetLocation();
  	
  

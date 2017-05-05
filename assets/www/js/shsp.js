@@ -9,7 +9,7 @@ function myshsp(){
 	"<div class='box shspp1' onclick='sdjy()'><img src='images/shsp2.png'/>" +
 	"<span>审贷决议</span>"+
 	"</div>";
-	var show2 = "<div class='box shspp1' onclick='buzhangsp()'><img src='images/shsp3.png'/>" +
+	/*var show2 = "<div class='box shspp1' onclick='buzhangsp()'><img src='images/shsp3.png'/>" +
 	"<span>小微负责人审批</span>"+
 	"</div>"+
 	"<div class='box shspp1' onclick='lsywbfzrsp()'><img src='images/shsp4.png'/>" +
@@ -17,12 +17,12 @@ function myshsp(){
 	"</div>"+
 	"<div class='box shspp1' onclick='hzsp()'><img src='images/shsp5.png'/>" +
 	"<span>行长审批</span>"+
-	"</div>";
-	if(Number(userType)!=1){
+	"</div>";*/
+/*	if(Number(userType)!=1){
 		shspshow = show1+show2;
-	}else{
+	}else{*/
 		shspshow=show1;
-	}
+	
 	window.scrollTo(0,0);//滚动条回到顶端
 	$("#mainPage").html("<div class='title'>审核审批</div>"+  
 			"<div class='content'>" +
@@ -61,6 +61,8 @@ function cysdrw(){
 			var obj = $.evalJSON(json);
 			for(var i = 0;i<obj.items.length;i++){
 				if(obj.items[i].cardType=="0"){
+					obj.items[i].cardType="身份证";
+				}else if(obj.items[i].cardType=="CST0000000000A"){
 					obj.items[i].cardType="身份证";
 				}else if(obj.items[i].cardType=="1"){
 					obj.items[i].cardType="军官证";
@@ -161,7 +163,8 @@ function cysdrw(){
 				}
 			})
 			$("#xsyxzl").click(function() {
-				if ($("input[type='radio']").is(':checked')) {
+				seeimage();
+				/*if ($("input[type='radio']").is(':checked')) {
 					var values =$('input[name="checkbox"]:checked').attr("value").split("@");
 					var res ={};
 					res.customerId = values[2];
@@ -172,7 +175,7 @@ function cysdrw(){
 				}else{
 //					alert("请选择一行");
 					window.wxc.xcConfirm("请选择一行", "warning");
-				}
+				}*/
 			})
 			$("#xszlxx").click(function() {
 				if ($("input[type='radio']").is(':checked')) {
@@ -348,16 +351,22 @@ function xszlxx(res){
 					"<ul class='tab' >"+
 					"<li name='tab2' id ='jyb' style='background:#22a5d9;'>建议</li>"+
 					"<li name='tab2' id ='jbzkb'>基本状况</li>"+
+					"<li name='tab2' id ='jyztb'>经营状态表</li>"+
+					"<li name='tab2' id ='scztb'>生存状态表</li>"+
+					"<li name='tab2' id ='ddpzb'>道德品质表</li>"+
 					"<li name='tab2' id = 'zcfzb'>资产负债</li>"+
+					"<li name='tab2' id = 'lrjb'>利润简表</li>"+
 					"<li name='tab2' id = 'bzlrb'>标准利润</li>"+
+					"<li name='tab2' id = 'zyywb'>主营业务表</li>"+
 					"<li name='tab2' id = 'xjlb'>现金流</li>"+
 					"<li name='tab2' id = 'jcb'>交叉</li>"+
 					"<li name='tab2' id = 'gzb'>固资</li>"+
+					"<li name='tab2' id = 'dhd'>点货单</li>"+
 					"<li name='tab2' id = 'yfysb'>应付预收</li>"+
 					"<li name='tab2' id = 'ysyfb'>应收预付</li>"+
+					"<li name='tab2' id = 'lsb'>流水</li>"+
+					"<li name='tab2' id = 'dbrb'>担保人</li>"+
 					"<li name='tab2' id = 'jueyb'>决议表</li>"+
-					"<li name='tab2' id = 'ddtjy'>抵贷通经营表</li>"+
-					"<li name='tab2' id = 'ddtxf'>抵贷通消费表</li>"+
 					"</ul></div>"+
 					"<div id = 'resultshow'>"+
 					obj.tableContentjyb+
@@ -377,17 +386,49 @@ function xszlxx(res){
 				change(this);
 				$("#resultshow").html(obj.tableContentjbzkb);
 			})
+			
+				//经营状态
+			$("#jyztb").click(function(){
+				change(this);
+				$("#resultshow").html(obj.tableContentjyztb);
+			})
+			
+				//生存状态
+			$("#scztb").click(function(){
+				change(this);
+				$("#resultshow").html(obj.tableContentscztb);
+			})
+			
+			
+				//道德品质
+			$("#ddpzb").click(function(){
+				change(this);
+				$("#resultshow").html(obj.tableContentddpzb);
+			})
 
 			//资产负债
 			$("#zcfzb").click(function(){
 				change(this);
 				$("#resultshow").html(obj.tableContentzcfzb);
 			})
+			
+			
+			//利润简表
+			$("#lrjb").click(function(){
+				change(this);
+				$("#resultshow").html(obj.tableContentlrjbb);
+			})
 
 			//标准利润
 			$("#bzlrb").click(function(){
 				change(this);
 				$("#resultshow").html(obj.tableContentbzlrb);
+			})
+			
+				//主营业务表
+			$("#zyywb").click(function(){
+				change(this);
+				$("#resultshow").html(obj.tableContentzyywb);
 			})
 
 			//现金流
@@ -407,6 +448,12 @@ function xszlxx(res){
 				change(this);
 				$("#resultshow").html(obj.tableContentxgzb);
 			})
+			
+				//点货单
+			$("#dhd").click(function(){
+				change(this);
+				$("#resultshow").html(obj.tableContentdhdb);
+			})
 
 			//应付预收
 			$("#yfysb").click(function(){
@@ -420,20 +467,20 @@ function xszlxx(res){
 				$("#resultshow").html(obj.tableContentysyfb);
 			})
 
+			//流水
+			$("#lsb").click(function(){
+				change(this);
+				$("#resultshow").html(obj.tableContentlsb);
+			})
+				//担保人
+			$("#dbrb").click(function(){
+				change(this);
+				$("#resultshow").html(obj.tableContentbzrb);
+			})
 			//决议表
 			$("#jueyb").click(function(){
 				change(this);
 				$("#resultshow").html(obj.tableContentjueyb);
-			})
-			//抵贷通经营
-			$("#ddtjy").click(function(){
-				change(this);
-				$("#resultshow").html(obj.tableContentddtjy);
-			})
-			//抵贷通消费
-			$("#ddtxf").click(function(){
-				change(this);
-				$("#resultshow").html(obj.tableContentddtxf);
 			})
 		},
 		error:function(json){
@@ -451,108 +498,93 @@ function xszlxx(res){
 //初审结论
 function csresult(res){
 	var tjjlurl = "/ipad/intopieces/updateAll.json";
-	var csjlurl = "/ipad/intopieces/csInfo.json";
+	var seeSqxxurl="/ipad/intopieces/input_decision_chusheng.json";
+	var td="";
 	var userId = window.sessionStorage.getItem("userId");
 	$.ajax({
-		url:wsHost+csjlurl,
+		url:wsHost+seeSqxxurl,
 		type: "GET",
 		dataType:'json',
 		data:{
 			appId:res.appId,
+			userId:userId,
+			cid:res.customerId,
+			pid:res.productId
 		},
-		cache:false,
 		success: function (json){
 			var obj = $.evalJSON(json);
-			var	managerList=window.sessionStorage.getItem("managerList");
-			var sddd="";
-			if(obj.evaResult!=null){
-				sddd="<tr>"+
-				"<th>评估结果：</th>"+
-				"<td>"+obj.evaResult.result+"</td>"+
-				"<th>拟授信额度（万元）：</th>"+
-				"<td>"+obj.evaResult.money+"</td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>姓名：</th>"+
-				"<td>"+obj.evaResult.cname+"</td>"+
-				"<th>身份证号：</th>"+
-				"<td>"+obj.evaResult.cardNo+"</td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>性别：</th>"+
-				"<td>"+obj.evaResult.sex+"</td>"+
-				"<th>经营状况得分：</th>"+
-				"<td>"+obj.evaResult.busScore+"</td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>道德品质得分：</th>"+
-				"<td>"+obj.evaResult.habScore+"</td>"+
-				"<th>生存状况得分：</th>"+
-				"<td>"+obj.evaResult.liveScore+"</td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>还款能力（万元）：</th>"+
-				"<td>"+obj.evaResult.payAbli+"</td>"+
-				"<th>未评估项/总项：</th>"+
-				"<td>"+obj.evaResult.project+"</td>"+
-				"</tr>";
-			}else{
-				sddd="<tr>"+
-				"<th>评估结果：</th>"+
-				"<td></td>"+
-				"<th>拟授信额度（万元）：</th>"+
-				"<td></td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>姓名：</th>"+
-				"<td></td>"+
-				"<th>身份证号：</th>"+
-				"<td></td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>性别：</th>"+
-				"<td></td>"+
-				"<th>经营状况得分：</th>"+
-				"<td></td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>道德品质得分：</th>"+
-				"<td></td>"+
-				"<th>生存状况得分：</th>"+
-				"<td></td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>还款能力（万元）：</th>"+
-				"<td></td>"+
-				"<th>未评估项/总项：</th>"+
-				"<td></td>"+
-				"</tr>";
+			for(var i=0;i<obj.size;i++){
+				td=td+"<option value="+obj.list[i].userId+">"+obj.list[i].id+","+obj.list[i].displayName+"</option>";
 			}
 			window.scrollTo(0,0);//滚动条回到顶端
 			$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='cysdrw()'/>进件初审结论</div>"+  
 					"<div class='content'>" +
-					"<table class='cpTable khjbxx' style='margin-top:20px;'>"+//审核审批任务信息
+					"<table class='cpTable khjbxx' style='margin-top:20px;'>"+
 					"<tr>"+                        
-					"<th colspan='4'>评估结果</th>"+  
-					"</tr>"+
-					sddd+
-					"<tr>"+                        
-					"<th colspan='4'>进件申请信息</th>"+  
+					"<th colspan='4'>客户申请信息</th>"+  
 					"</tr>"+
 					"<tr>"+
-					"<th>申请金额：</th>"+
-					"<td><input type ='text' value='"+res.applyQuota+"' readonly = 'true'>"+
-					"</td>"+
+					"<th>客户名称:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.name+" disabled='isabled'/></td>"+
+					"<th>申请额度(元):</th>"+
+					"<td><input  type='text' value="+obj.customerApplicationInfo.applyQuota+" disabled='isabled'/></td>"+
 					"</tr>"+
 					"<tr>"+
-					"<th>产品授信区间：</th>"+
-					"<td><input type='text' id='sxqj' value='"+obj.prodCreditRange+"' readonly = 'true'/>"+
-					"</td>"+
-					"<th>产品名称：</th>"+
-					"<td><input type = 'text' value='"+obj.producAttribute.productName+"' readonly = 'true'></td>"+
+					"<th>申请期限:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.sqqx+" disabled='isabled'/></td>"+
+					"<th>贷款用途:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.dkyt+" disabled='isabled'/></td>"+
 					"</tr>"+
 					"<tr>"+                        
-					"<th colspan='4'>初审结论</th>"+  
+					"<th colspan='4'>申请产品信息</th>"+  
+					"</tr>"+
+					"<tr>"+
+					"<th>产品名称:</th>"+
+					"<td><input  type='text' value="+obj.producAttribute.productName+" disabled='isabled'/></td>"+
+					"<th>产品授信区间:</th>"+
+					"<td><input  type='text' value="+obj.producAttribute.prodCreditRange+" disabled='isabled'/></td>"+
+					"</tr>"+
+					"<tr>"+
+					"<th>产品基准利率:</th>"+
+					"<td><input  type='text' value="+obj.producAttribute.rateRange+" disabled='isabled'/></td>"+
+					"<th>产品用途:</th>"+
+					"<td><input  type='text' value="+obj.producAttribute.purposeLoan+" disabled='isabled'/></td>"+
+					"</tr>"+
+					
+					
+					
+					"<tr>"+                        
+					"<th colspan='4'>客户经理意见信息</th>"+  
+					"</tr>"+
+					"<tr>"+
+					"<th>建议金额:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.jyje+" disabled='isabled'/></td>"+
+					"<th>建议期限:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.jyqx+" disabled='isabled'/></td>"+
+					"</tr>"+
+					"<tr>"+
+					"<th>建议产品:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.jycp+" disabled='isabled'/></td>"+
+					"<th>建议利率:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.jylv+" disabled='isabled'/></td>"+
+					"</tr>"+
+					
+					"<tr>"+
+					"<th>建议担保人:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.jydbr+" disabled='isabled'/></td>"+
+					"<th>客户与担保人关系:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.gx+" disabled='isabled'/></td>"+
+					"</tr>"+
+					"<tr>"+
+					"<th>建议抵押物:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.jydyw+" disabled='isabled'/></td>"+
+					"<th>抵押物物权人:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.wqr+" disabled='isabled'/></td>"+
+					"</tr>"+
+					
+				
+					"<tr >"+                        
+					"<th colspan='4' >初审结论</th>"+  
 					"</tr>"+
 					"<tr>"+
 					"<th>审议结论：</th>"+
@@ -564,29 +596,30 @@ function csresult(res){
 					"</tr>"+
 					"<tr>"+
 					"<th>授信额度：</th>"+
-					"<td><input type='text' id ='sxed' name='decision_amount'/>"+
+					"<td><input type='text' id ='decisionAmount' name='decisionAmount'/>"+
 					"</td>"+
 					"<th>利率</th>"+
-					"<td><input id='decisionRate' type='text' name='decision_rate'/>"+
+					"<td><input id='decisionRate' type='text' name='decisionRate'/>"+
 					"</td>"+
 					"</tr>"+
+					
 					"<tr>"+
-					"<th>参与审批人：</th>"+
-					"<td><select id ='cyuser1'>"+"<option value = '0'>请选择</option>"
-					+managerList+
-					"</select></td>"+
-					"<th>参与审批人：</th>"+
-					"<td><select id ='cyuser2'>"+"<option value = '0'>请选择</option>"
-					+managerList+
-					"</select></td>"+
-					"</tr>"+
-					"<tr>"+
-					"<th>辅调客户经理:</th>"+
-					"<td><select id ='fduser'>"+"<option value = '0'>请选择</option>"
-					+managerList+
-					"</select></td>"+
+					"<th>抵押方式：</th>"+
+					"<td><select id='dbfs'>" +
+					"<option value = '抵押'>抵押</option>" +
+					"<option value = '质押'>质押</option>" +
+					"<option value = '保证'>保证</option>" +
+					"<option value = '信用'>信用</option>" +
+					"<option value = '组合(抵押+质押)'>组合(抵押+质押)</option>" +
+					"<option value = '组合(抵押+保证)'>组合(抵押+保证)</option>" +
+					"<option value = '组合(抵押+信用)'>组合(抵押+信用)</option>" +
+					"<option value = '组合(质押+保证)'>组合(质押+保证)</option>" +
+					"<option value = '组合(质押+信用)'>组合(质押+信用)</option>" +
+					"<option value = '组合(保证+信用)'>组合(保证+信用)</option>" +
+					"</select>"+
+					"</td>"+
 					"<th>期限：</th>"+
-					"<td><select>" +
+					"<td><select id='qx'>" +
 					"<option value = '1'>1个月</option>" +
 					"<option value = '2'>2个月</option>" +
 					"<option value = '3'>3个月</option>" +
@@ -626,11 +659,56 @@ function csresult(res){
 					"</select>"+
 					"</td>"+
 					"</tr>"+
+					"<tr>"+
+					"<th>参与审批人：</th>"+
+					"<td><select id ='cyUser1'>"+"<option value = '0'>请选择</option>"
+					+td+
+					"</select></td>"+
+					"<th>参与审批人：</th>"+
+					"<td><select id ='cyUser2'>"+"<option value = '0'>请选择</option>"
+					+td+
+					"</select></td>"+
+					"</tr>"+
+					"<tr>"+
+					"<th>辅调客户经理:</th>"+
+					"<td><select id ='fdUser'>"+"<option value = '0'>请选择</option>"
+					+td+
+					"</select></td>"+
+					"</tr>"+
 					"<tr style='display :none'>"+
 					"<th><label id ='reason' for=reason>原因:</label></th>"+
 					"<td><textarea name='decisionRefusereason' id='decisionRefusereason'></textarea>" +
 					"</td>" +
 					"</tr>"+
+					
+					"<tr>"+                        
+					"<th colspan='4'>选择审贷委</th>"+  
+					"</tr>"+
+					"<tr>"+
+					"<th>主审委：</th>"+
+					"<td><select id ='user_Id1'>"+"<option value = '0'>请选择</option>"
+					+td+
+					"</select></td>"+
+					"<th>副审委一：</th>"+
+					"<td><select id ='user_Id2'>"+"<option value = '0'>请选择</option>"
+					+td+
+					"</select></td>"+
+					"</tr>"+
+					"<tr>"+
+					"<th>副审委二:</th>"+
+					"<td><select id ='user_Id3'>"+"<option value = '0'>请选择</option>"
+					+td+
+					"</select></td>"+
+					"</tr>"+
+					
+					
+					
+					
+					
+					
+					
+					
+					
 					"</table>"+
 					"<p>" +
 					"<input type='button' class='btn btn-primary btn-large' value='保存' id='save'/>" +
@@ -640,16 +718,39 @@ function csresult(res){
 			$(".right").hide();
 			$("#mainPage").show();
 			$("#save").click(function(){
-				var number =/^\d+$/;
-				var sxfw= $("#sxqj").val();
-				var sxed= $("#sxed").val();
-				var s = sxfw.split("-");
-
-				if((Number(sxed)>=Number(s[0])&&Number(sxed)<=Number(s[1])&&number.test(sxed)&&$("#auditresult").val()=="APPROVE")||$("#auditresult").val()!="APPROVE"){
-
-					$("#save").attr('disabled',"true");
+				if($("#auditresult").val()=="APPROVE"){
+					var customerId=res.customerId;
+			    	var productId=res.productId;
+			    	var decisionRate=$("#decisionRate").val();
+			    	var decisionAmount=$("#decisionAmount").val();
+			    	var qx=$("#qx").val();
+			    	var user_Id1=$("#user_Id1").val();
+			    	var user_Id2=$("#user_Id2").val();
+			    	var user_Id3=$("#user_Id3").val();
+			    	var cyUser1=$("#cyUser1").val();
+			    	var cyUser2=$("#cyUser2").val();
+			    	var fdUser=$("#fdUser").val(); 
+			    	var dbfs=$("#dbfs").val(); 
+			    	 $.ajax({
+							url : wsHost+"/ipad/intopieces/insertCSPC.json?customerId="+customerId+"&&productId="+productId
+							+"&&decisionRate="+decisionRate+"&&decisionAmount="+decisionAmount+"&&qx="+qx+"&&user_Id1="+user_Id1
+							+"&&user_Id2="+user_Id2+"&&user_Id3="+user_Id3+"&&cyUser1="+cyUser1+"&&cyUser2="+cyUser2+"&&fdUser="+fdUser+"&&dbfs="+dbfs+"&&userId="+userId,
+							
+							dataType : 'json',
+							type : "get",
+							success : function(json) {
+								var mes = $.evalJSON(json);
+								window.wxc.xcConfirm(mes.map, "success");
+								cysdrw();
+							}
+			    	 });
+				}
+				
+				
+				
+				else{
 					$.ajax({
-						url:wsHost+tjjlurl,
+						url:wsHost+"/ipad/intopieces/updateAll.json",
 						dateType:'json',
 						type:'GET',
 						data:{
@@ -658,13 +759,13 @@ function csresult(res){
 							fdUser:$("#fduser").val(),
 							auditType:"1",
 							decisionRate:$("#decisionRate").val(),//利率
-							productId:obj.customerApplicationInfo.productId,
+							productId:res.productId,
 							serialNumber:obj.customerApplicationInfo.serialNumber,
-							customerId:obj.customerApplicationInfo.customerId,
+							customerId:res.customerId,
 							id:res.appId,
 							status:$("#auditresult").val(),
-							decisionAmount:sxed,
-							custManagerId:obj.customerInfor.userId,
+							decisionAmount:$("#decisionAmount").val(),
+							custManagerId:obj.custManagerId,
 							userId:userId,
 							decisionRefusereason:$("#decisionRefusereason").val(),
 						},
@@ -675,18 +776,19 @@ function csresult(res){
 							cysdrw();
 						}
 					})
-				}else{
-//					alert("请输入正确的授信金额");
-					window.wxc.xcConfirm("请输入正确的授信金额", "warning");
 				}
-			})
+			});
 
 			$("#auditresult").change(function (){
 
 				var status = $("select[name=status]").val();
 				if( status == "APPROVE"){
-					$("tr:eq(11)").show();
-					$("tr:eq(14)").hide();
+					$("tr:eq(19)").show();
+					$("tr:eq(20)").show();
+					$("tr:eq(14)").show();
+					$("tr:eq(13)").show();
+					$("tr:eq(18)").show();
+					$("tr:eq(17)").hide();
 //					if($("input[name=decision_amount]").val() == ""){
 //					$("input[name='decision_amount']").after("<label class='error myerror' generated='true' >金额不能为空</label>");   
 //					}
@@ -697,16 +799,24 @@ function csresult(res){
 				}
 
 				if( status == "REJECTAPPROVE"){
-					$("tr:eq(11)").hide();
-					$("tr:eq(14)").show();
+					$("tr:eq(19)").hide();
+					$("tr:eq(20)").hide();
+					$("tr:eq(14)").hide();
+					$("tr:eq(13)").hide();
+					$("tr:eq(18)").hide();
+					$("tr:eq(17)").show();
 //					if($("textarea[name=decision_refusereason]").val() == ""){
 //					$("textarea[name='decision_refusereason']").after("<label class='error myerror' generated='true' >拒绝原因不能为空</label>");   
 //					}
 				}
 
 				if( status == "RETURNAPPROVE"){
-					$("tr:eq(11)").hide();
-					$("tr:eq(14)").show();
+					$("tr:eq(19)").hide();
+					$("tr:eq(20)").hide();
+					$("tr:eq(14)").hide();
+					$("tr:eq(13)").hide();
+					$("tr:eq(18)").hide();
+					$("tr:eq(17)").show();
 				}
 
 				if(status =='RETURNAPPROVE'){
@@ -758,7 +868,8 @@ function teacherList(){
 }
 //审贷决议
 function sdjy(){
-	var sdrwurl= "/ipad/intopieces/csBrowse.json";
+	//var sdrwurl= "/ipad/intopieces/csBrowse.json";
+	var sdrwurl= "/ipad/intopieces/insertSD.json";
 	var userId = window.sessionStorage.getItem("userId");
 	var tmp ="";
 	var result={};
@@ -768,61 +879,40 @@ function sdjy(){
 	"<th></th>"+                 
 	"<th>客户名称</th>"+  
 	"<th>申请金额</th>"+
-	"<th>证件类型</th>"+
 	"<th>证件号码</th>"+
-	"<th>审核状态</th>"+
+	"<th>申请产品</th>"+
 	"<th>申请时间</th>"+
-	"<th>节点名称</th>"+ 
+	"<th>客户经理</th>"+ 
+	"<th>当前审贷级别</th>"+ 
 	"</tr>";
+	var tb="";
 	$.ajax({
 		url:wsHost+sdrwurl,
 		type: "GET",
 		dataType:'json',
 		data:{
 			userId:userId,
-			nextNodeName:"审贷决议"
 		},
 		success: function (json){
 			var obj = $.evalJSON(json);
-			for(var i = 0;i<obj.items.length;i++){
-
-				if(obj.items[i].cardType=="0"){
-					obj.items[i].cardType="身份证";
-				}else if(obj.items[i].cardType=="1"){
-					obj.items[i].cardType="军官证";
-				}else if(obj.items[i].cardType=="2"){
-					obj.items[i].cardType="护照";
-				}else if(obj.items[i].cardType=="3"){
-					obj.items[i].cardType="香港身份证";
-				}else if(obj.items[i].cardType=="4"){
-					obj.items[i].cardType="澳门身份证";
-				}else if(obj.items[i].cardType=="5"){
-					obj.items[i].cardType="台湾身份证";
+			for(var i = 0;i<obj.size;i++){
+				if(obj.result[i].zsw==1){
+					tb="主审";
+				}else if(obj.result[i].zsw==0){
+					tb="副审";
 				}
-				if(obj.items[i].status=="save"){
-					obj.items[i].status="未申请";
-				}else if(obj.items[i].status=="audit"){
-					obj.items[i].status="已申请";
-				}else if(obj.items[i].status=="nopass"){
-					obj.items[i].status="申请未通过";
-				}else if(obj.items[i].status=="refuse"){
-					obj.items[i].status="被拒接";
-				}else if(obj.items[i].status=="approved"){
-					obj.items[i].status="审批结束";
-				}else if(obj.items[i].status=="succeed"){
-					obj.items[i].status="申请成功";
-				}
+               
 
-				tmp=tmp+"<tr onclick='check(this)'><td><span class='radio'> <input type='radio' name='checkbox' value='"+obj.items[i].productId+"@"+
-				obj.items[i].applyQuota+"@"+obj.items[i].customerId+"@"+obj.items[i].id+
-				"@"+obj.items[i].status+"@"+obj.items[i].examineAmount+"'/>"+"</span></td>"+  
-				"<td>"+obj.items[i].chineseName+"</td>"+
-				"<td>"+obj.items[i].applyQuota+"</td>"+
-				"<td>"+obj.items[i].cardType+"</td>"+
-				"<td>"+obj.items[i].cardId+"</td>"+
-				"<td>"+obj.items[i].status+"</td>"+
-				"<td>"+obj.items[i].createdTime+"</td>"+			
-				"<td>"+obj.items[i].nodeName+"</td></tr>"
+				tmp=tmp+"<tr onclick='check(this)'><td><span class='radio'> <input type='radio' name='checkbox' value='"+obj.result[i].productId+"@"+
+				obj.result[i].applyQuota+"@"+obj.result[i].customerId+"@"+obj.result[i].id+"@"+obj.result[i].zsw+"'/>"+"</span></td>"+  
+				"<td>"+obj.result[i].chineseName+"</td>"+
+				"<td>"+obj.result[i].applyQuota+"</td>"+
+				"<td>"+obj.result[i].cardId+"</td>"+
+				"<td>"+obj.result[i].productName+"</td>"+
+				"<td>"+obj.result[i].creatime+"</td>"+			
+				"<td>"+obj.result[i].displayName+"</td>" +
+				"<td>"+tb+"</td></tr>"
+				
 
 				if((i+1)%5==0){
 					result[j]=tmp;
@@ -879,6 +969,7 @@ function sdjy(){
 					res.customerId = values[2];
 					res.productId =values[0];
 					res.applyQuota = values[1];
+					res.zsw = values[4];
 					xssdjy(res);
 				}else{
 //					alert("请选择一行");
@@ -925,180 +1016,161 @@ function sdjy(){
 //显示审贷决议
 function xssdjy(res){
 
-	var sdjyurl = "/ipad/intopieces/sdjy.json";
-	var tjjlurl = "/ipad/intopieces/updateAll.json";
+	var sdjyurl="/ipad/intopieces/selectSDSQ.json";
 	var userId = window.sessionStorage.getItem("userId");
+	res.userId=userId;
 	$.ajax({
 		url:wsHost+sdjyurl,
 		type: "GET",
 		dataType:'json',
 		data:{
 			appId:res.appId,
+			pid:res.productId,
+			cid:res.customerId,
+			sdw:res.zsw,
+			userId:userId
 		},
-		cache:false,
 		success: function (json){  
 			var obj = $.evalJSON(json);
-			var opin =window.sessionStorage.getItem("managerList");
-			var teacher=teacherList();
-			var productList=obj.productList;
-			var list="";
-			for(var i = 0;i<productList.length;i++){
-				if($.trim(productList[i].productName)!=$.trim(obj.producAttribute.productName)){
-					list =list+"<option value = '"+productList[i].id+"'>"+productList[i].productName+"</option>";
-				}
-			}
-			var sddd="";
-			if(obj.evaResult!=null){
-				sddd="<tr>"+
-				"<th>评估结果：</th>"+
-				"<td>"+obj.evaResult.result+"</td>"+
-				"<th>拟授信额度（万元）：</th>"+
-				"<td>"+obj.evaResult.money+"</td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>姓名：</th>"+
-				"<td>"+obj.evaResult.cname+"</td>"+
-				"<th>身份证号：</th>"+
-				"<td>"+obj.evaResult.cardNo+"</td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>性别：</th>"+
-				"<td>"+obj.evaResult.sex+"</td>"+
-				"<th>经营状况得分：</th>"+
-				"<td>"+obj.evaResult.busScore+"</td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>道德品质得分：</th>"+
-				"<td>"+obj.evaResult.habScore+"</td>"+
-				"<th>生存状况得分：</th>"+
-				"<td>"+obj.evaResult.liveScore+"</td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>还款能力（万元）：</th>"+
-				"<td>"+obj.evaResult.payAbli+"</td>"+
-				"<th>未评估项/总项：</th>"+
-				"<td>"+obj.evaResult.project+"</td>"+
-				"</tr>";
-			}else{
-				sddd="<tr>"+
-				"<th>评估结果：</th>"+
-				"<td></td>"+
-				"<th>拟授信额度（万元）：</th>"+
-				"<td></td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>姓名：</th>"+
-				"<td></td>"+
-				"<th>身份证号：</th>"+
-				"<td></td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>性别：</th>"+
-				"<td></td>"+
-				"<th>经营状况得分：</th>"+
-				"<td></td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>道德品质得分：</th>"+
-				"<td></td>"+
-				"<th>生存状况得分：</th>"+
-				"<td></td>"+
-				"</tr>"+
-				"<tr>"+
-				"<th>还款能力（万元）：</th>"+
-				"<td></td>"+
-				"<th>未评估项/总项：</th>"+
-				"<td></td>"+
-				"</tr>";
-			}
 			window.scrollTo(0,0);//滚动条回到顶端
 			$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='sdjy()'/>审贷决议结论</div>"+  
 					"<div class='content'>" +
-					"<table class='cpTable khjbxx' style='margin-top:20px;'>"+//审核审批任务信息
+					"<table class='cpTable khjbxx' style='margin-top:20px;'>"+
 					"<tr>"+                        
-					"<th colspan='4'>评估结果</th>"+  
-					"</tr>"+
-					sddd+
-					"<tr>"+                        
-					"<th colspan='4'>进件申请信息</th>"+  
+					"<th colspan='4'>客户申请信息</th>"+  
 					"</tr>"+
 					"<tr>"+
-					"<th>申请金额：</th>"+
-					"<td><input type ='text' value='"+res.applyQuota+"' readonly = 'true'>"+
-					"</td>"+
+					"<th>客户名称:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.name+" disabled='isabled'/></td>"+
+					"<th>申请额度(元):</th>"+
+					"<td><input  type='text' value="+obj.customerApplicationInfo.applyQuota+" disabled='isabled'/></td>"+
 					"</tr>"+
 					"<tr>"+
-					"<th>产品授信区间：</th>"+
-					"<td><input type='text' id='sxqj' value='"+obj.prodCreditRange+"' readonly = 'true'/>"+
-					"</td>"+
-					"<th>产品名称：</th>"+
-					"<td><input type = 'text' value='"+obj.producAttribute.productName+"' readonly = 'true'></td>"+
+					"<th>申请期限:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.sqqx+" disabled='isabled'/></td>"+
+					"<th>贷款用途:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.dkyt+" disabled='isabled'/></td>"+
 					"</tr>"+
 					"<tr>"+                        
-					"<th colspan='4'>初审结论</th>"+  
+					"<th colspan='4'>申请产品信息</th>"+  
 					"</tr>"+
 					"<tr>"+
-					"<th>初审额度：</th>"+
-					"<td><input type='text'  name='decision_amount' value = '"+obj.appManagerAuditLog.examineAmount+"' readonly ='true'/>"+
-					"</td>"+
-					"<th>利率</th>"+
-					"<td><input type='text' name='decision_rate'  value = '"+obj.appManagerAuditLog.examineLv+"' readonly ='true'/>"+
-					"</td>"+
+					"<th>产品名称:</th>"+
+					"<td><input  type='text' value="+obj.producAttribute.productName+" disabled='isabled'/></td>"+
+					"<th>产品授信区间:</th>"+
+					"<td><input  type='text' value="+obj.producAttribute.prodCreditRange+" disabled='isabled'/></td>"+
 					"</tr>"+
 					"<tr>"+
-					"<th>参与审批人：</th>"+
-					"<td><input type='text' value = '"+obj.appManagerAuditLog.userId_1+"' readonly ='true'>"+
-					"</td>"+
-					"<th>参与审批人：</th>"+
-					"<td><input type='text' value = '"+obj.appManagerAuditLog.userId_2+"' readonly ='true'>"+
-					"</td>"+
-					"</tr>"+
-					"<tr>"+
-					"<th>辅调客户经理:</th>"+
-					"<td><input type='text' value = '"+obj.appManagerAuditLog.userId_3+"' readonly ='true'>"+
-					"</td>"+
+					"<th>产品基准利率:</th>"+
+					"<td><input  type='text' value="+obj.producAttribute.rateRange+" disabled='isabled'/></td>"+
+					"<th>产品用途:</th>"+
+					"<td><input  type='text' value="+obj.producAttribute.purposeLoan+" disabled='isabled'/></td>"+
 					"</tr>"+
 					"<tr>"+                        
-					"<th colspan='4'>审议结论</th>"+  
+					"<th colspan='4'>客户经理意见信息</th>"+  
+					"</tr>"+
+					"<tr>"+
+					"<th>建议金额:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.jyje+" disabled='isabled'/></td>"+
+					"<th>建议期限:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.jyqx+" disabled='isabled'/></td>"+
+					"</tr>"+
+					"<tr>"+
+					"<th>建议产品:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.jycp+" disabled='isabled'/></td>"+
+					"<th>建议利率:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.jylv+" disabled='isabled'/></td>"+
+					"</tr>"+
+					
+					"<tr>"+
+					"<th>建议担保人:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.jydbr+" disabled='isabled'/></td>"+
+					"<th>客户与担保人关系:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.gx+" disabled='isabled'/></td>"+
+					"</tr>"+
+					"<tr>"+
+					"<th>建议抵押物:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.jydyw+" disabled='isabled'/></td>"+
+					"<th>抵押物物权人:</th>"+
+					"<td><input  type='text' value="+obj.SqInfo.wqr+" disabled='isabled'/></td>"+
+					"</tr>"+
+					"</table>"+
+					
+					
+					
+					
+					"<table class='cpTable khjbxx' style='margin-top:5px;'>"+
+					"<tr>"+                        
+					"<th colspan='4'>初审信息</th>"+  
+					"</tr>"+
+					"<tr>"+
+					"<th>初审额度(元)</th>"+
+					"<td><input  type='text' value="+obj.appManagerAuditLog.examineAmount+" disabled='isabled'/></td>"+
+					"<th>利率:</th>"+
+					"<td><input  type='text' value="+obj.appManagerAuditLog.examineLv+" disabled='isabled'/></td>"+
+					"</tr>"+
+					"<tr>"+
+					"<th>期限:</th>"+
+					"<td><input  type='text' value="+obj.appManagerAuditLog.qx+" disabled='isabled'/></td>"+
+					"<th>担保方式:</th>"+
+					"<td><input  type='text' value="+obj.appManagerAuditLog.dbfs+" disabled='isabled'/></td>"+
+					"</tr>"+
+					"<tr>"+
+					"<th>参与审批客户经理:</th>"+
+					"<td><input  type='text' value="+obj.appManagerAuditLog.userId_1+" disabled='isabled'/></td>"+
+					"<th>参与审批客户经理:</th>"+
+					"<td><input  type='text' value="+obj.appManagerAuditLog.userId_2+" disabled='isabled'/></td>"+
+					"</tr>"+
+					"<tr>"+
+					"<th>辅助客户经理:</th>"+
+					"<td><input  type='text' value="+obj.appManagerAuditLog.userId_3+" disabled='isabled'/></td>"+
+					"</tr>"+
+					"</table>"+
+					
+					
+					
+					
+					"<table class='cpTable khjbxx' style='margin-top:5px;'>"+
+					"<tr >"+                        
+					"<th colspan='4' >审贷结论</th>"+  
 					"</tr>"+
 					"<tr>"+
 					"<th>审议结论：</th>"+
-					"<td><select id ='auditresult' name = 'status'><option value = 'APPROVE'>通过</option>" +
-					"<option value = 'REJECTAPPROVE'>拒绝</option>" +
-					"<option value = 'RETURNAPPROVE'>退回</option>" +
+					"<td><select id ='auditresult' name = 'status'><option value = 'approved'>通过</option>" +
+					"<option value = 'refuse'>拒绝</option>" +
+					"<option value = 'returnedToFirst'>退回</option>" +
 					"</select>"+
 					"</td>"+
-					"<th>变更产品名称</th>"+
-					"<td><select id ='xxggcp'><option value = ''>"+obj.producAttribute.productName+"</option>" +
-					list+
-					"</select>"+
-					"</td>"+
+					
+					"<th>审贷级别:</th>"+
+					"<td><input type='text' value="+obj.IntoPiecesFilters.groupName+" disabled='disabled'/>"+
 					"</tr>"+
 					"<tr>"+
 					"<th>授信额度：</th>"+
-					"<td><input type='text' id ='sxed' name='decision_amount'/>"+
+					"<td><input type='text' id ='decisionAmount' name='decisionAmount'/>"+
 					"</td>"+
 					"<th>利率</th>"+
-					"<td><input id='decisionRate' type='text' name='decision_rate'/>"+
+					"<td><input id='decisionRate' type='text' name='decisionRate'/>"+
 					"</td>"+
 					"</tr>"+
+					
 					"<tr>"+
-					"<th>参与审批人：</th>"+
-					"<td><select id ='cyuser1'>"+"<option value = '0'>请选择</option>"
-					+opin+
-					"</select></td>"+
-					"<th>参与审批人：</th>"+
-					"<td><select id ='cyuser2'>"+"<option value = '0'>请选择</option>"
-					+opin+
-					"</select></td>"+
-					"</tr>"+
-					"<tr>"+
-					"<th>辅调客户经理:</th>"+
-					"<td><select id ='fduser'>"+"<option value = '0'>请选择</option>"
-					+opin+
-					"</select></td>"+
+					"<th>抵押方式：</th>"+
+					"<td><select id='dbfs'>" +
+					"<option value = '抵押'>抵押</option>" +
+					"<option value = '质押'>质押</option>" +
+					"<option value = '保证'>保证</option>" +
+					"<option value = '信用'>信用</option>" +
+					"<option value = '组合(抵押+质押)'>组合(抵押+质押)</option>" +
+					"<option value = '组合(抵押+保证)'>组合(抵押+保证)</option>" +
+					"<option value = '组合(抵押+信用)'>组合(抵押+信用)</option>" +
+					"<option value = '组合(质押+保证)'>组合(质押+保证)</option>" +
+					"<option value = '组合(质押+信用)'>组合(质押+信用)</option>" +
+					"<option value = '组合(保证+信用)'>组合(保证+信用)</option>" +
+					"</select>"+
+					"</td>"+
 					"<th>期限：</th>"+
-					"<td><select id ='decisionTerm'>" +
+					"<td><select id='qx'>" +
 					"<option value = '1'>1个月</option>" +
 					"<option value = '2'>2个月</option>" +
 					"<option value = '3'>3个月</option>" +
@@ -1139,22 +1211,10 @@ function xssdjy(res){
 					"</td>"+
 					"</tr>"+
 					"<tr>"+
-					"<th>审批老师：</th>"+
-					"<td><select id ='sdUser'>"+"<option value = '0'>请选择</option>"
-					+teacher+
-					"</select></td>"+
-					"<th>还款方式：</th>"+
-					"<td><select id ='hkfs'>"+"<option value = '01'>定期结息，到期日利随本清</option>"+
-					"<option value = '02'>定期结息，按合同约定分期还本</option>"+
-					"<option value = '03'>等额本息</option>"+
-					"<option value = '04'>等额本金</option>"+
-					"<option value = '05'>利随本清</option>"+
-					"<option value = '06'>其他还款方法</option>"+
-					"</select></td>"+
-					"</tr>"+
-					"<tr>"+
-					"<th><label for=reason>备注:</label></th>"+
-					"<td><textarea name='beizhu' id='beizhu'></textarea>" +
+					"<th>审贷委:</th>"+
+					"<td><input  type='text' value='"+obj.result.name1+"'/>"+
+					"<th><label id ='reason' for=reason>意见:</label></th>"+
+					"<td><textarea name='SDWUSER1YJ' id='SDWUSER1YJ' ></textarea>" +
 					"</td>" +
 					"</tr>"+
 					"<tr style='display :none'>"+
@@ -1163,60 +1223,106 @@ function xssdjy(res){
 					"</td>" +
 					"</tr>"+
 					"</table>"+
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 					"<p>" +
 					"<input type='button' class='btn btn-primary btn-large' value='保存' id='save' />" +
-					"<input type='button' class='btn btn-primary btn-large' value='上传审贷会纪要' id='upload' />" +
+					//"<input type='button' class='btn btn-primary btn-large' value='上传审贷会纪要' id='upload' />" +
 					"<input type='button' class='btn btn-large' value='返回' onclick='sdjy()'/>" +
 					"</p>"+
 			"</div>");
 			$(".right").hide();
 			$("#mainPage").show();
 			$("#save").click(function(){
-				var number =/^\d+$/;
-				var sxfw= $("#sxqj").val();
-				var sxed= $("#sxed").val();
-				var s = sxfw.split("-");
-				if((Number(sxed)>=Number(s[0])&&Number(sxed)<=Number(s[1])&&number.test(sxed)&&$("#auditresult").val()=="APPROVE")||$("#auditresult").val()!="APPROVE"){
-					$("#save").attr('disabled',"true");
-					$.ajax({
-						url:wsHost+tjjlurl,
-						dateType:'json',
-						type:'GET',
-						data:{
-							proodId:$("#xxggcp").val(),
-							qixian:$("#qixian").val(),
-							cyUser1:$("#cyuser1").val(),
-							cyUser2:$("#cyuser2").val(),
-							fdUser:$("#fduser").val(),
-							beiZhu:$("#beizhu").val(),
-							decisionTerm:$("#decisionTerm").val(),
-							hkfs:$("#hkfs").val(),
-							sdUser:$("#sdUser").val(),
-							auditType:"2",
-							decisionRate:$("#decisionRate").val(),
-							productId:obj.customerApplicationInfo.productId,
-							serialNumber:obj.customerApplicationInfo.serialNumber,
-							customerId:obj.customerApplicationInfo.customerId,
-							id:res.appId,
-							status:$("#auditresult").val(),
-							decisionAmount:$("#sxed").val(),
-							custManagerId:obj.custManagerId,
-							userId:userId,
-							decisionRefusereason:$("#decisionRefusereason").val(),
-						},
-						success:function(json){
-							var mes = $.evalJSON(json);
-//							alert(mes.message);
-							window.wxc.xcConfirm(mes.message, "success");
-							sdjy();
-						}
-
-
-					})
-				}else{
-//					alert("请输入正确的授信金额");
-					window.wxc.xcConfirm("请输入正确的授信金额", "warning");
-				}
+				var status=$("#auditresult").val();
+		    	var id=res.appId;
+		    	var decisionAmount=$("#decisionAmount").val();
+		    	var qx=$("#qx").val();
+		    	var SDWUSER1YJ=$("#SDWUSER1YJ").val();
+		    	var decisionRate=$("#decisionRate").val();
+		    	var decisionRefusereason=$("#decisionRefusereason").val();
+		    	var customerId=res.customerId;
+		    	var productId=res.productId;
+		    	var userId=res.userId;
+		    	var dbfs=$("#dbfs").val();
+				
+		    	 $.ajax({
+						url : wsHost+"/ipad/intopieces/insertsdjycs.json?customerId="+customerId
+						+"&&productId="+productId+"&&decisionRate="+decisionRate+"&&decisionAmount="+decisionAmount
+						+"&&qx="+qx+"&&id="+id+"&&SDWUSER1YJ="+SDWUSER1YJ 
+						+"&&decisionRefusereason="+decisionRefusereason+"&&status="+status+"&&userId="+userId+"&&dbfs="+dbfs,
+						
+						dataType : 'json',
+						type : "get",
+						success : function(json) {
+							var obj = $.evalJSON(json);
+							if(obj.message=="提交成功"){
+								alert("提交成功");
+								sdjy();
+							}else{
+								alert("提交失败");
+							}
+						}}); 
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			})
 			
 			$("#upload").click(function (){
@@ -1227,8 +1333,9 @@ function xssdjy(res){
 
 				var status = $("select[name=status]").val();
 				if( status == "APPROVE"){
-					$("tr:eq(15)").show();
-					$("tr:eq(20)").hide();
+					$("tr:eq(18)").show();
+					$("tr:eq(19)").show();
+					$("tr:eq(21)").hide();
 					if($("input[name=decision_amount]").val() == ""){
 						$("input[name='decision_amount']").after("<label class='error myerror' generated='true' >金额不能为空</label>");   
 					}
@@ -1238,22 +1345,24 @@ function xssdjy(res){
 				}
 
 				if( status == "REJECTAPPROVE"){
-					$("tr:eq(15)").hide();
-					$("tr:eq(20)").show();
+					$("tr:eq(18)").hide();
+					$("tr:eq(19)").hide();
+					$("tr:eq(21)").show();
 					if($("textarea[name=decision_refusereason]").val() == ""){
 						$("textarea[name='decision_refusereason']").after("<label class='error myerror' generated='true' >拒绝原因不能为空</label>");   
 					}
 				}
 
 				if( status == "RETURNAPPROVE"){
-					$("tr:eq(15)").hide();
-					$("tr:eq(20)").show();
+					$("tr:eq(18)").hide();
+					$("tr:eq(19)").hide();
+					$("tr:eq(21)").show();
 				}
 
 				if(status =='RETURNAPPROVE'){
-					$("#reason").text("退回原因");	
+					$("#decisionRefusereason").text("退回原因");	
 				}else{
-					$("#reason").text("拒绝原因");	
+					$("#decisionRefusereason").text("拒绝原因");	
 				} 
 			});
 

@@ -106,7 +106,7 @@ function myjjgl(){
 	}
 }
 function myjjgl2(productInfo){
-
+	var sfhava=0;
 	var cpxxurl="/ipad/addIntoPieces/browseCustomer.json";
 	var userId = window.sessionStorage.getItem("userId");
 	var tmp ="";
@@ -127,7 +127,10 @@ function myjjgl2(productInfo){
 
 			if(obj.items[i].cardType=="0"){
 				obj.items[i].cardType="身份证";
-			}else if(obj.items[i].cardType=="1"){
+			}else if(obj.items[i].cardType=="CST0000000000A"){
+				obj.items[i].cardType="身份证";
+			}
+			else if(obj.items[i].cardType=="1"){
 				obj.items[i].cardType="军官证";
 			}else if(obj.items[i].cardType=="2"){
 				obj.items[i].cardType="护照";
