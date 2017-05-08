@@ -150,7 +150,10 @@ function pie() {
 				        	   "backgroundColor":"#4e74c0","text": "审核通过数量  "+obj.result.approvedNum,"values": [obj.result.approvedNum]
 				           },
 				           {   
-				        	   "backgroundColor":"#edd400","text": "进件总数 "+obj.sums
+				        	   "backgroundColor":"#0f8cf7","text": "退回进件数量 "+obj.result.returncount,"values": [obj.result.returncount]
+				           },
+				           {   
+				        	   "backgroundColor":"#edd400","text": "审批进件总数 "+obj.result.allcount,"values": [obj.result.allcount]
 				           }
 				           ]
 		};

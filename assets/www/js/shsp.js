@@ -8,6 +8,9 @@ function myshsp(){
 	"</div>"+
 	"<div class='box shspp1' onclick='sdjy()'><img src='images/shsp2.png'/>" +
 	"<span>审贷决议</span>"+
+	"</div>"+
+	"<div class='box shspp1' onclick='zsjy()'><img src='images/shsp3.png'/>" +
+	"<span>终审</span>"+
 	"</div>";
 	/*var show2 = "<div class='box shspp1' onclick='buzhangsp()'><img src='images/shsp3.png'/>" +
 	"<span>小微负责人审批</span>"+
@@ -163,19 +166,32 @@ function cysdrw(){
 				}
 			})
 			$("#xsyxzl").click(function() {
-				seeimage();
-				/*if ($("input[type='radio']").is(':checked')) {
+				if ($("input[type='radio']").is(':checked')) {
 					var values =$('input[name="checkbox"]:checked').attr("value").split("@");
+					$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='"+res.currentLoc+"'/>调查模板</div>"+  
+							"<div class='contents' id='allmap'  style='text-align:center;height:580px;margin:auto auto;'>" +
+							"<div class='spinner'>"+
+							"<div class='bounce1'></div>"+
+							"<div class='bounce2'></div>"+
+							"<div class='bounce3'></div>"+
+							"</div>"+
+							"</div>"+
+							"</div>");
 					var res ={};
 					res.customerId = values[2];
 					res.productId =values[0];
 					res.applicationId =values[3];
 					res.currentLoc ="cysdrw()";
-					xsyxzl(res);
+				/*	var yxzlurl="/ipad/intopieces/selectAllImage.json";
+					$.get(wsHost+yxzlurl,{cid:res.customerId,pid:res.productId},callbackfunction);
+					function  callbackfunction (json){
+						seeimage(res,json);
+					}*/
+					seeimage(res);
 				}else{
 //					alert("请选择一行");
 					window.wxc.xcConfirm("请选择一行", "warning");
-				}*/
+				}
 			})
 			$("#xszlxx").click(function() {
 				if ($("input[type='radio']").is(':checked')) {
@@ -217,14 +233,6 @@ function xsyxzl(res){
 	var id;
 	var page = 0;
 	var lltpurl;
-//	$.ajax({
-//		url:wsHost+yxzlurl,
-//		type: "GET",
-//		dataType:'json',
-//		data:{
-//			customerId:res.customerId,
-//		},
-//		success: 
 	$.get(wsHost+yxzlurl,{customerId:res.customerId,productId:res.productId,applicationId:res.applicationId},callbackfunction);
 		function  callbackfunction (json){
 			obj = $.evalJSON(json);
@@ -984,7 +992,11 @@ function sdjy(){
 					res.productId =values[0];
 					res.applicationId =values[3];
 					res.currentLoc ="sdjy()";
-					xsyxzl(res);
+					/*var yxzlurl="/ipad/intopieces/selectAllImage.json";
+					$.get(wsHost+yxzlurl,{cid:res.customerId,pid:res.productId},callbackfunction);
+					function  callbackfunction (json){*/
+						seeimage(res);
+					
 				}else{
 //					alert("请选择一行");
 					window.wxc.xcConfirm("请选择一行", "warning");
@@ -1332,7 +1344,7 @@ function xssdjy(res){
 			$("#auditresult").change(function (){
 
 				var status = $("select[name=status]").val();
-				if( status == "APPROVE"){
+				if( status == "approved"){
 					$("tr:eq(18)").show();
 					$("tr:eq(19)").show();
 					$("tr:eq(21)").hide();
@@ -1344,7 +1356,7 @@ function xssdjy(res){
 					}
 				}
 
-				if( status == "REJECTAPPROVE"){
+				if( status == "refuse"){
 					$("tr:eq(18)").hide();
 					$("tr:eq(19)").hide();
 					$("tr:eq(21)").show();
@@ -1353,13 +1365,13 @@ function xssdjy(res){
 					}
 				}
 
-				if( status == "RETURNAPPROVE"){
+				if( status == "returnedToFirst"){
 					$("tr:eq(18)").hide();
 					$("tr:eq(19)").hide();
 					$("tr:eq(21)").show();
 				}
 
-				if(status =='RETURNAPPROVE'){
+				if(status =='returnedToFirst'){
 					$("#decisionRefusereason").text("退回原因");	
 				}else{
 					$("#decisionRefusereason").text("拒绝原因");	
