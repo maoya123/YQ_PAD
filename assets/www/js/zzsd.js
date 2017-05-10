@@ -176,12 +176,6 @@ function xszsjy(res){
 				"<tr>"+                        
 				"<th colspan='4'>主审决审</th>"+  
 				"</tr>"+
-				/*"<tr>"+
-				"<th>审贷委:</th>"+
-				"<td><input  type='text' value="+obj.IntoPieces.applyQuota+" disabled='isabled'/></td>"+
-				"<th>审贷级别:</th>"+
-				"<td><input  type='text' value="+tb1+" disabled='isabled'/></td>"+
-				"</tr>"+*/
 				"<tr>"+
 				"<th>审贷结论:</th>"+
 				"<td><input  type='text' value='通过' disabled='isabled'/></td>"+

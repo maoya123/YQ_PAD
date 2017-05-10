@@ -90,7 +90,12 @@ function hide_dcts(){//隐藏登出提示
    // $(".display-div").animate({marginTop:"-250px"},"500");
 
     $("#text").animate({top:"-800px"},"500");
-}    
+}
+function hide_dcts1(){//隐藏登出提示
+	   // $(".display-div").animate({marginTop:"-250px"},"500");
+
+	    $("#text1").animate({top:"-800px"},"500");
+	}  
 //登出
 function dc(){
 	var wsLoginUrl = "/ipad/user/logout.json"+"?login="+window.sessionStorage.getItem("login");

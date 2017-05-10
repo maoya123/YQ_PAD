@@ -65,7 +65,7 @@ function mywdsy(){
 		"</div>"+
 		"<div class='box wdsy1' onclick='mycpgl()'><img src='images/clkh.png'/><span>产品查询</span></div>"+
 		"<div class='box wdsy2' onclick='khjjxx();pie()'><img src='images/khjjxx.png'/><span>客户进件信息</span></div>"+
-		"<div class='box wdsy3' onclick='khyyzk()'><img src='images/khyyzk.png'/><span>客户运营状况</span></div>"+
+		"<div class='box wdsy3' onclick='tjt()'><img src='images/khyyzk.png'/><span>客户运营状况</span></div>"+
 		im+
 		"<div class='box wdsy5' onclick ='jljlxx()'><img src='images/jljlxx.png'/><span>奖励激励信息</span></div>"+ 
 		locationType+
@@ -243,6 +243,8 @@ function jjxxlb(){
 					"</table>"+
 					"<p><input type='button' class='btn btn-large btn-primary' value='上一页' id = 'syy' />"+
 					"<input type='button' class='btn btn-large btn-primary' value='下一页' id = 'xyy'/>"+
+					"<input type='button' class='btn btn-large btn-primary' value='审批记录' id = 'spjl'/>"+
+					"<input type='button' class='btn btn-large btn-primary' value='审贷会纪要' id = 'sdhjy'/>"+
 					"<input type='button' class='btn btn-large btn-primary' value='补充调查' id = 'bcdc'/>"+
 					"<input type='button' class='btn btn-large' value='返回' onclick='khjjxx();pie()'/></p>"+
 			"</div>");
@@ -268,6 +270,24 @@ function jjxxlb(){
 					page = page+1;
 				}
 			})
+				$("#spjl").click(function(){
+				if ($("input[type='radio']").is(':checked')) {
+					var values =$('input[name="checkbox"]:checked').attr("value").split("@");
+					var id=values[2];
+					spjlxy(id);
+				}else{
+					window.wxc.xcConfirm("请选择一行", "warning");
+				}});
+			$("#sdhjy").click(function(){
+				if ($("input[type='radio']").is(':checked')) {
+					var values =$('input[name="checkbox"]:checked').attr("value").split("@");
+					var id=values[2];
+					var pid=values[4];
+					var cid=values[3];
+					sdhjy(id,pid,cid);
+				}else{
+					window.wxc.xcConfirm("请选择一行", "warning");
+				}});
 			$("#bcdc").click(function(){
 			if ($("input[type='radio']").is(':checked')) {
 				var values =$('input[name="checkbox"]:checked').attr("value").split("@");
@@ -285,9 +305,9 @@ function jjxxlb(){
 				window.wxc.xcConfirm("请选择一行", "warning");
 			}
 
-		})
+		});
 		}
-	})
+	});
 }   
 //补充调查
 function bcdcimage(res){
@@ -1097,20 +1117,23 @@ function tz(){
 }
 //通知-审贷会通知
 function sdhtz(){
-	var khjlurl="/ipad/custAppInfo/cxshendaihuitz.json";
+	var khjlurl="/ipad/intopieces/selectSDTZ.json";
 	var tmp="";
 	var result=[];
 	var page=1;
 	var j=1;
-	$.get(wsHost+khjlurl,{managerId:window.sessionStorage.getItem("userId")},shendaihuicallbackInfor);
+	$.get(wsHost+khjlurl,{userId:window.sessionStorage.getItem("userId")},shendaihuicallbackInfor);
 	function shendaihuicallbackInfor(json){
 		var obj = $.evalJSON(json);
-		for(var i =0;i<obj.result.length;i++){
-			tmp += "<tr onclick='check(this)'><td><span class='radio'> <input type='radio' name='checkbox' value='"+obj.result[i].id+"@"+obj.result[i].createdBy+"'/></span></td>"+
-			"<td>"+obj.result[i].noticeTitle+"</td>"+
-			"<td>"+obj.result[i].userId+"</td>"+
-			"<td>"+obj.result[i].noticeContent+"</td>" +
-			"<td>"+obj.result[i].modifiedTime+"</td>" +
+		for(var i =0;i<obj.size;i++){
+			tmp += "<tr>"+
+			"<td>"+obj.result[i].chineseName+"</td>"+
+			"<td>"+obj.result[i].cardId+"</td>"+
+			"<td>"+obj.result[i].productName+"</td>" +
+			"<td>"+obj.result[i].applyQuota+"</td>" +
+			"<td>"+obj.result[i].displayName+"</td>" +
+			"<td>"+obj.result[i].nodeName+"</td>" +
+			"<td>"+obj.result[i].zsw+"</td>" +
 			"</tr>";
 			if((i+1)%5==0){
 				result[j]=tmp;
@@ -1120,11 +1143,13 @@ function sdhtz(){
 		}
 		result[j]=tmp;
 	var head ="<tr>"+                             
-	"<th></th>"+  
-	"<th>上会客户</th>"+
-	"<th>上会客户经理</th>"+
-	"<th>通知内容</th>"+
-	"<th>上会时间时间</th>"+
+	"<th>客户</th>"+
+	"<th>身份证</th>"+
+	"<th>产品名称</th>"+
+	"<th>申请金额</th>"+
+	"<th>所属客户经理</th>"+
+	"<th>审贷名称</th>"+
+	"<th>审贷级别</th>"+
 	"</tr>";
 	
 	window.scrollTo(0,0);//滚动条回到顶端
@@ -1134,8 +1159,8 @@ function sdhtz(){
 			head+result[page]+
 			"</table>"+
 			"<p>" +
-			"<input type='button' class='btn btn-large btn-primary' value='接受' id = 'oks'/>"+
-			"<input type='button' class='btn btn-large btn-primary' value='拒绝' id = 'refuse'/>"+
+		/*	"<input type='button' class='btn btn-large btn-primary' value='接受' id = 'oks'/>"+
+			"<input type='button' class='btn btn-large btn-primary' value='拒绝' id = 'refuse'/>"+*/
 			"<input type='button' class='btn btn-large btn-primary' value='上一页' id = 'syy' />"+
 			"<input type='button' class='btn btn-large btn-primary' value='下一页' id = 'xyy'/>"+
 			"<input type='button' class='btn btn-large' value='返回' onclick='tz()'/></p>"+
