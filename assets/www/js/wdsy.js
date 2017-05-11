@@ -65,9 +65,9 @@ function mywdsy(){
 		"</div>"+
 		"<div class='box wdsy1' onclick='mycpgl()'><img src='images/clkh.png'/><span>产品查询</span></div>"+
 		"<div class='box wdsy2' onclick='khjjxx();pie()'><img src='images/khjjxx.png'/><span>客户进件信息</span></div>"+
-		"<div class='box wdsy3' onclick='tjt()'><img src='images/khyyzk.png'/><span>客户运营状况</span></div>"+
+		"<div class='box wdsy3' onclick='tjt()'><img src='images/khyyzk.png'/><span>月季统计</span></div>"+
 		im+
-		"<div class='box wdsy5' onclick ='jljlxx()'><img src='images/jljlxx.png'/><span>奖励激励信息</span></div>"+ 
+		//"<div class='box wdsy5' onclick ='jljlxx()'><img src='images/jljlxx.png'/><span>奖励激励信息</span></div>"+ 
 		locationType+
 		"</div>";
 		$("#mainPage").html(content);
@@ -296,6 +296,7 @@ function jjxxlb(){
 			res.appId=values[2];
 			res.customerId=values[3];
 			res.productId=values[4];
+			res.name=values[0];
 			bcdcimage(res);
                 }else{
                 	window.wxc.xcConfirm("进件状态非退回不能补充资料", "info");
@@ -313,7 +314,7 @@ function jjxxlb(){
 function bcdcimage(res){
 	
 	window.scrollTo(0,0);//滚动条回到顶端
-	$("#mainPage").html("<div class='title' onclick='jjxxlb()'><img src='images/back.png'/>客户进件列表-补充调查</div>"+  
+	$("#mainPage").html("<div class='title' ><img src='images/back.png' onclick='jjxxlb()'/>补充影像资料</div>"+  
 			"<div class='content' style='text-align:center;'>" + 
 								"<table id='qtyxzl' class='cpTable' style='text-align:center;margin-top:20px;'>"+
 									"<tr>"+    
@@ -324,7 +325,8 @@ function bcdcimage(res){
 									"<tr>"+  
 										"<td>1</td>"+
 										"<td><input type='text' id='qtyxzl_sheet1' name='imageuri' uri='' class='readonly' readonly='readonly'/><input type='button' class='btn' onclick='getMedia(\"qtyxzl_sheet1\",\"img\",\"imageuri\",\"1\");' value='选择文件'/></td>"+
-										"<td><img src='images/ugc_icon_type_photo.png' id ='takepucture'/></td>"+
+										"<td><img src='images/ugc_icon_type_photo.png' onclick='capture(\"qtyxzl_sheet1\",\"img\",\"imageuri\",\"1\",\""+res.name+ "\");'/></td>"+
+										//"<td><img src='images/ugc_icon_type_photo.png' id ='takepucture'/></td>"+
 //										"<td><img src='images/ugc_icon_type_photo.png' onclick='capturePhoto(\"fcz_sheet1\",\"img\",\"imageuri\");'/></td>"+
 									"</tr>"+
 								"</table>"+
@@ -334,7 +336,8 @@ function bcdcimage(res){
 								"</p>"+
 								"<p>" +
 								"<input type='button' class='btn btn-primary btn-large' value='确定' id='sure' />" +
-								"<input type='button' class='btn btn-primary btn-large' value='查看已上传列表' id='ysctplb' />" +
+								//"<input type='button' class='btn btn-primary btn-large' value='查看已上传列表' id='ysctplb' />" +
+								"<input type='button' class='btn btn-primary btn-large' value='下一步' id='xyb' />" +
 								"<input type='button' class='btn btn-large' value='返回' id='back' onclick='jjxxlb()'/>" +
 								"</p>"+
 							"</div>");
@@ -364,48 +367,122 @@ function bcdcimage(res){
 	  $("#ysctplb").click(function(){
 		  bcdcimagelb(res);
 	  })
-//	  /** 
-//	   * 上传成功回调. 
-//	   * @param r 
-//	   */ 
-//	  function uploadSuccesss(r) { 
-//	  	var obj = $.evalJSON(r.response);
-////	  	hide_upload();
-//	  	if(obj.success==false){
-//	  	if(obj.message=="001"){
-////	  		alert("调查模板不一致！导入失败！");
-//	  		$("#uploadInfo").html("调查模板不一致！导入失败！");
-//	  		 $("#diss").attr('disabled',false);
-//	  		 $("#sure").attr('disabled',false);
-//	  	}else{
-////	  		alert("导入失败！");
-//	  		$("#uploadInfo").html("导入失败！");
-//	  		 $("#diss").attr('disabled',false);
-//	      $("#sure").attr('disabled',false);
-//	  	}
-//	  	}else{
-////	  		alert("导入成功！");
-//	  		$("#uploadInfo").html("导入成功！");
-//	  		 $("#diss").attr('disabled',false);
-//	  		 $("#sure").attr('disabled',false);
-//	  	}
-//	  	 clearProcess();
-//	  }  
-//
-//	  /** 
-//	   * 上传失败回调. 
-//	   * @param error 
-//	   */  
-//	  function uploadFaileds(error) {  
-////	  	hide_upload();
-////	      alert('文件上传失败'); 
-//	      $("#uploadInfo").html("导入失败！");
-//	      $("#diss").attr('disabled',false);
-//	      $("#sure").attr('disabled',false);
-//	      clearProcess();  
-//	      
-//	  } 
+	    $("#xyb").click(function(){
+	    	scbcdcmbb(res);
+	  })
 }
+//上传补充调查模板
+function scbcdcmbb(res){
+	window.scrollTo(0,0);//滚动条回到顶端
+	$("#mainPage").html("<div class='title'><img src='images/back.png' id='back'/>补充调查模板</div>"+  
+			"<div class='content' style='text-align:center;'>" + 
+			"<table id='fcz' class='cpTable' style='text-align:center;margin-top:20px;'>"+
+			"<tr>"+                             
+			"<th>文件路径</th>"+
+			"</tr>"+
+			"<tr>"+    
+			"<td><input type='text' id='fcz_sheet1' name='imageuri' uri='' class='readonly' readonly='readonly'/><input type='button' class='btn' id='select' value='选择文件'/></td>"+
+			"</tr>"+
+			"</table>"+
+								"<p>" +
+								"<input type='button' class='btn btn-primary btn-large' value='上传' id='sure' />" +
+								"<input type='button' class='btn btn-primary btn-large' value='重新提交进件' id='xyb' />" +
+								"<input type='button' class='btn btn-large' value='返回' id='back1''/>" +
+								"</p>"+
+							"</div>");
+	  $(".right").hide();
+	  $("#mainPage").show();	
+		$("#back").click(function(){
+			bcdcimage(res);
+		});
+	$("#back1").click(function(){
+		bcdcimage(res);
+		});
+		document.addEventListener("deviceready", function(){  
+			$(function(){  
+				$('#upload_file_link').click(openFileSelector);  
+			});  
+		}, false); 
+		$("#sure").click(function(){
+			window.wxc.xcConfirm("是否开始上传调查模板", "confirm",{onOk:function(){
+				$("#sure").attr('disabled',"true");
+				var fileURI = document.getElementsByName("imageuri")[0].getAttribute("uri");
+				var fileName = $("#fcz_sheet1").val();
+				var options = new FileUploadOptions();  
+				options.fileKey = "file";  
+				options.fileName=fileURI.substr(fileURI.lastIndexOf('/') + 1); 
+				options.mimeType = "multipart/form-data";  
+				options.chunkedMode = false;  
+				ft = new FileTransfer();  
+				var uploadUrl=encodeURI(wsHost+"/ipad/addIntopieces/reportImport.json?productId="+res.productId+"&customerId="+res.customerId+"&fileName="+options.fileName);  
+				show_uploadModel();
+				ft.upload(fileURI,uploadUrl,uploadSuccess, uploadFailed, options); 
+			}});
+		})
+
+
+		$("#select").click(function(){
+
+			openFileSelector("fcz_sheet1","imageuri");
+		})
+		$("#xyb").click(function(){
+			var jjcxurl="/ipad/custAppInfo/applyInfo.json";
+			$.ajax({
+				url:wsHost + jjcxurl,
+				type: "GET",
+				dataType:'json',
+				data:{
+					id: res.appId
+				},
+				success: function (json) {
+					obj = $.evalJSON(json);
+					window.wxc.xcConfirm(obj.message, "info"); 
+					jjxxlb();
+				}});
+		});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //补充调查已上传列表
 function bcdcimagelb(res){
 	var ysctpurl ="/ipad/JnpadImageBrowse/uploadYx.json";
@@ -2192,7 +2269,7 @@ function khjlrb(){
 			resu.tomorrowplan =values[3];
 			resu.todayplan =values[4];
 			resu.reportDate=values[6];
-			resu.managerId=values[7];
+			resu.managerId=window.sessionStorage.getItem("userId");
 			xgkhrb(resu);
 			}else{
 //				alert("请选择一行");
@@ -2208,7 +2285,7 @@ function khjlrb(){
 			resu.tomorrowplan =values[3];
 			resu.todayplan =values[4];
 			resu.reportDate=values[6];
-			resu.managerId=values[7];
+			resu.managerId=window.sessionStorage.getItem("userId");
 			xsrbxx(resu);
 		}else{
 //			alert("请选择一行");
