@@ -745,39 +745,14 @@ function khcsrz(){
 			$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='editUser()'/>客户维护-客户催收日志</div>"+  
 					"<div class='content'>"+
 					"<table class='cpTable' id='cslb' style='text-align:center;'>"+
-//					"<tr>"
-//					"<th>序号</th>"+  
-//					"<th>客户姓名</th>"+
-//					"<th>客户身份标识</th>"+
-//					"<th>催收方式</th>"+
-//					"<th>催收时间</th>"+
-//					"<th>实施效果</th>"+
-//					"<th>承诺还款金额</th>"+
-//					"<th>承诺还款时间</th>"+
-//					"<th>是否变更催收计划</th>"+
-//					"</tr>"+
-					
-					head+result[page]+
-//					"<td></td>"+
-//					"<td>郝俊芝</td>"+
-//					"<td></td>"+
-//					"<td>电话</td>"+
-//					"<td>2015-12-12</td>"+
-//					"<td></td>"+
-//					"<td>3000</td>"+
-//					"<td>2015-12-12</td>"+
-//					"<td><input type='button' onclick='bgcsjh()' class='btn btn-warning' value='是'/></td>"+
-					
+				
 					"</table>"+
-//					"<textarea placeholder='客户催收实施描述' style='height:15em;'></textarea>"+
 					"<p>"+
-//					"<input type='button' class='btn btn-large btn-primary' value='创建' onclick= 'cjcsjh()'  id = 'cjcsjh'/>"+
 					"<input type='button' class='btn btn-large btn-primary' value='修改'  id = 'xgcsjh'/>"+
 					"<input type='button' class='btn btn-large btn-primary' value='显示' id = 'csxs'/>"+
 					"<input type='button' class='btn btn-large btn-primary' value='上一页' id = 'syy' />"+
 					"<input type='button' class='btn btn-large btn-primary' value='下一页' id = 'xyy'/>"+
 					"<input type='button' class='btn btn-large' value='返回' onclick = 'editUser()' id = 'fh'/>"+
-//					"<input type='button' class='btn btn-large btn-primary' value='保存并继续' onclick='editUser()'/>" +
 					"</p>"+
 			"</div>");
 			$(".right").hide();

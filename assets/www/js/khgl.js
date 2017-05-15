@@ -83,7 +83,7 @@ $("#mainPage").html("<div class='title'><img src='images/back.png' onclick='mykh
                         "<div class='khwh1' onclick='khzlcx()'><img src='images/khzlcx.png'/><span>客 户 资 料 查 询</span></div>"+
                         "<div class='khwh2' onclick='khwhlb()'><img src='images/khwhjh2.png'/><span>客<br/>户<br/>维<br/>护<br/>计<br/>划</span></div>"+
                         "<div class='khwh3' onclick='khwhrz()'><img src='images/khwhrz.png'/><span>客<br/>户<br/>维<br/>护<br/>日<br/>志</div>"+
-                        "<div class='khwh4' onclick='khcsrz()'><img src='images/khcsrz.png'/><span>客 户 催 收 日 志</span></div>"+
+                        "<div class='khwh4' onclick='khysxx()'><img src='images/khcsrz.png'/><span>客 户原始信息</span></div>"+
                     "</div>");
     $(".right").hide();
     $("#mainPage").show();

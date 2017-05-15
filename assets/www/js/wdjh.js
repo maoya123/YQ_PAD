@@ -2,20 +2,18 @@
 function mywdjh(){
 	var userType = window.sessionStorage.getItem("userType");
 	var shows="";
-	if(userType!=1){
+	/*if(userType!=1){
 		shows="<div class='box jhgl' onclick='pxjhlb()'><img src='images/pxjh.png' style='margin-left:-15px;'/><span>培训计划</span></div>"+
 		"<div class='box jhgl' onclick='yjjdcx()'><img src='images/yjjdcx.png' style='margin-left:-15px;'/><span>业绩进度查看</span></div>";
-	}
-//	if(userType==0){
-//		shows=shows+"<div class='box jhgl' onclick='zhuanyong()'><img src='images/pxjh.png' style='margin-left:-15px;'/><span>专用按钮</span></div>";
-//	}
+	}*/
+	
 	window.scrollTo(0,0);//滚动条回到顶端
 	$("#mainPage").html("<div class='title'>计划管理</div>"+  
 			"<div class='content'>" +
 			"<div class='box jhgl' onclick='khwhjhlb()'><img src='images/khwhjh.png' style='margin-left:-15px;'/><span>客户维护计划</span></div>"+
 			"<div class='box jhgl' onclick='cjcsjh(2)'><img src='images/khcsjh.png' style='margin-left:-15px;'/><span>客户催收计划</span></div>"+
-			"<div class='box jhgl' onclick='khjlrb()'><img src='images/gzjh.png' style='margin-left:-15px;'/><span>客户经理日报</span></div>"+                       
-			shows+
+			"<div class='box jhgl' onclick='khjlrbgl()'><img src='images/gzjh.png' style='margin-left:-15px;'/><span>客户经理日报</span></div>"+                       
+			"<div class='box jhgl' onclick='yjjdcx()'><img src='images/yjjdcx.png' style='margin-left:-15px;'/><span>业绩进度查看</span></div>"+
 			"<div class='box jhgl' onclick='yjjdlr()'><img src='images/sdh.png' style='margin-left:-15px;'/><span>业绩进度录入</span></div>"+ 
 	"</div>");
 	$(".right").hide();
@@ -121,89 +119,6 @@ function khwhjhlb(){
 
 
 }
-//function mykhwhjh(){
-//window.scrollTo(0,0);//滚动条回到顶端
-//$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='mywdjh()'/>客户维护计划</div>"+ 
-//"<div class='content'>"+
-//"<table class='cpTable' style='text-align:center;'>"+
-//"<tr>"+                             
-//"<th>序号</th>"+  
-//"<th>客户姓名</th>"+
-//"<th>客户身份标识</th>"+
-//"<th>产品标识</th>"+
-//"<th>贷款金额</th>"+
-//"<th>还款状态</th>"+
-//"<th>贷款余额</th>"+
-//"<th width='10%'>维护方式</th>"+
-//"<th width='10%'>维护目标</th>"+
-//"<th>维护时间</th>"+
-//"</tr>"+
-//"<tr>"+    
-//"<td>1</td>"+
-//"<td>郝俊芝</td>"+
-//"<td></td>"+
-//"<td></td>"+
-//"<td>100000</td>"+
-//"<td><span class='label'>还款中</span></td>"+
-//"<td>50000</td>"+
-//"<td><input type='text' class='addinput'/></td>"+
-//"<td><input type='text' class='addinput'/></td>"+
-//"<td><input type='date' class='addinput'/></td>"+
-//"</tr>"+
-//"<tr>"+    
-//"<td>1</td>"+
-//"<td>郝俊芝</td>"+
-//"<td></td>"+
-//"<td></td>"+
-//"<td>100000</td>"+
-//"<td><span class='label label-warning'>已逾期</span></td>"+
-//"<td>50000</td>"+
-//"<td><input type='text' class='addinput'/></td>"+
-//"<td><input type='text' class='addinput'/></td>"+
-//"<td><input type='date' class='addinput'/></td>"+
-//"</tr>"+
-//"<tr>"+    
-//"<td>1</td>"+
-//"<td>郝俊芝</td>"+
-//"<td></td>"+
-//"<td></td>"+
-//"<td>100000</td>"+
-//"<td><span class='label label-success'>已还款</span></td>"+
-//"<td>50000</td>"+
-//"<td><input type='text' class='addinput'/></td>"+
-//"<td><input type='text' class='addinput'/></td>"+
-//"<td><input type='date' class='addinput'/></td>"+
-//"</tr>"+
-//"<tr>"+    
-//"<td>1</td>"+
-//"<td>郝俊芝</td>"+
-//"<td></td>"+
-//"<td></td>"+
-//"<td>100000</td>"+
-//"<td><span class='label label-important'>已拒绝</span></td>"+
-//"<td>50000</td>"+
-//"<td><input type='text' class='addinput'/></td>"+
-//"<td><input type='text' class='addinput'/></td>"+
-//"<td><input type='date' class='addinput'/></td>"+
-//"</tr>"+
-//"<tr>"+    
-//"<td>1</td>"+
-//"<td>郝俊芝</td>"+
-//"<td></td>"+
-//"<td></td>"+
-//"<td>100000</td>"+
-//"<td><span class='label label-inverse'>已关闭</span></td>"+
-//"<td>50000</td>"+
-//"<td><input type='text' class='addinput'/></td>"+
-//"<td><input type='text' class='addinput'/></td>"+
-//"<td><input type='date' class='addinput'/></td>"+
-//"</tr>"+
-//"</table>"+
-//"<p><input type='button' class='btn btn-large btn-primary' value='保存' onclick='mywdjh()'/></p>"+
-//"</div>");
-//$(".right").hide();
-//$("#mainPage").show();
-//}   
 //客户催收计划
 function khcsjh(){
 	window.scrollTo(0,0);//滚动条回到顶端
@@ -384,32 +299,21 @@ function gzjh(){
 	$("#mainPage").show();
 }  
 function yjjdlr(){
-	var jdlrcxurl="/ipad/performmance/insertSelect.json";
-	$.ajax({
-		url:wsHost+jdlrcxurl,
-		type: "GET",
-		dataType:'json',
-		data:{
-			userId:window.sessionStorage.getItem("userId"),
-		},
-		success: function (json){
-			var obj = $.evalJSON(json);
 			window.scrollTo(0,0);//滚动条回到顶端
 			$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='mywdjh()'/>业绩进度录入</div>"+  
 					"<div class='content' >"+ 
 					"<table id='cslb' class='cpTable jjTable' style='text-align:center;'>"+
-
 					"<tr>"+                             
 					"<th style='width:100px;'>拜访数</th>"+  
 					"<td><input type='text' class='yejijindu' id='visitcount' name='visitcount' value='0' onfocus='onfocuss' /></td>"+
 					"<th style='width:100px;'>申请数</th>"+  
-					"<td><input type='text' class='yejijindu' value='"+obj.applyNum+"' id='applycount' name='applycount' /></td>"+
+					"<td><input type='text' class='yejijindu' value='0' id='applycount' name='applycount' /></td>"+
 					"<th style='width:100px;'>申请拒绝数</th>"+  
-					"<td><input type='text' class='yejijindu' value='"+obj.refuseNum+"' id='applyrefuse' name='applyrefuse' /></td>"+
+					"<td><input type='text' class='yejijindu'  value='0' id='applyrefuse' name='applyrefuse' /></td>"+
 					"</tr>"+
 					"<tr>"+                             
 					"<th style='width:100px;'>征信数</th>"+  
-					"<td><input type='text' class='' value='0' id='creditcount' name='creditcount'/></td>"+
+					"<td><input type='text' class=''  value='0' id='creditcount' name='creditcount'/></td>"+
 //					"<td><input type='text' class='addinput' value='0' id='creditcount' name='creditcount'/></td>"+
 					"<th style='width:100px;'>征询拒绝数</th>"+  
 					"<td><input type='text' class='' value='0' id='creditrefuse' name='creditrefuse'/></td>"+
@@ -420,13 +324,13 @@ function yjjdlr(){
 					"<th style='width:100px;'>报告数</th>"+  
 					"<td><input type='text' class='' value='0' id='reportcount' name='reportcount'/></td>"+
 					"<th style='width:100px;'>内审数</th>"+  
-					"<td><input type='text' class='' value='"+obj.auditNum+"' id='internalcount' name='internalcount' /></td>"+
+					"<td><input type='text' class=''  value='0' id='internalcount' name='internalcount' /></td>"+
 					"<th style='width:100px;'>上会数</th>"+  
-					"<td><input type='text' class='' value='"+obj.willNum+"' id='meetingcout' name='meetingcout' /></td>"+
+					"<td><input type='text' class=''  value='0' id='meetingcout' name='meetingcout' /></td>"+
 					"</tr>"+
 					"<tr>"+                             
 					"<th style='width:100px;'>通过数</th>"+  
-					"<td><input type='text' class='' value='"+obj.passNum+"' id='passcount' name='passcount' /></td>"+
+					"<td><input type='text' class=''  value='0' id='passcount' name='passcount' /></td>"+
 					"<th style='width:100px;'>签约数</th>"+  
 					"<td><input type='text' class='' value='0' id='signcount' name='signcount'/></td>"+
 					"<th style='width:100px;'>放款数</th>"+  
@@ -462,16 +366,13 @@ function yjjdlr(){
 					success: function (json){
 						var obj = $.evalJSON(json);
 //						alert(obj.mess);
-						window.wxc.xcConfirm(obj.mess, "success");
+						window.wxc.xcConfirm(obj.message, "success");
 					}
 				})
 			})
-		}
-	})
 }
 
 function yjjdcx(){
-	$("#mainPage").html("");
 	$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='mywdjh()'/>业绩进度查询</div>"+  
 			"</div>"+
 			"<div class='contents' id='allmap'  style='text-align:center;height:580px;margin:auto auto;'>" +
@@ -482,57 +383,63 @@ function yjjdcx(){
 			"</div>"+
 			"</div>"+
 	"</div>");
-	var jdcxurl ="/ipad/performmance/browse.page";
+	var jdcxurl ="/ipad/performmance/selectManagerTeam.json?userId="+window.sessionStorage.getItem("userId");;
 	var body ="";
+	var td="";
+	var th="";
 	$.get(wsHost+jdcxurl,callbackInfor);
-
 	function callbackInfor(json){
 		var obj = $.evalJSON(json);
-		for(var i=0;i<obj.result.length;i++){
-
-			if(obj.result[i].managerName=="汇总" || obj.result[i].managerName=="总计"){
-
-				body=body+"<tr><th>"+obj.result[i].name+"</th>"+
-				"<th>"+obj.result[i].managerName+"</th>"+
-				"<th>"+obj.result[i].visitcount_s+"("+obj.result[i].visitcount+")"+"</th>"+
-				"<th>"+obj.result[i].applycount_s+"("+obj.result[i].applycount+")"+"</th>"+
-				"<th>"+obj.result[i].applyrefuse_s+"("+obj.result[i].applyrefuse+")"+"</th>"+
-				"<th>"+obj.result[i].creditcount_s+"("+obj.result[i].creditcount+")"+"</th>"+
-				"<th>"+obj.result[i].creditrefuse_s+"("+obj.result[i].creditrefuse+")"+"</th>"+
-				"<th>"+obj.result[i].realycount_s+"("+obj.result[i].realycount+")"+"</th>"+
-				"<th>"+obj.result[i].reportcount_s+"("+obj.result[i].reportcount+")"+"</th>"+
-				"<th>"+obj.result[i].internalcount_s+"("+obj.result[i].internalcount+")"+"</th>"+
-				"<th>"+obj.result[i].meetingcout_s+"("+obj.result[i].meetingcout+")"+"</th>"+
-				"<th>"+obj.result[i].passcount_s+"("+obj.result[i].passcount+")"+"</th>"+
-				"<th>"+obj.result[i].signcount_s+"("+obj.result[i].signcount+")"+"</th>"+
-				"<th>"+obj.result[i].givemoneycount_s+"("+obj.result[i].givemoneycount+")"+"</th>" +
-				"<th>"+obj.result[i].money+"</th>" +
-				"</tr>";
-
-			}else{
-
-				body=body+"<tr><td>"+obj.result[i].name+"</td>"+
-				"<td>"+obj.result[i].managerName+"</td>"+
-				"<td>"+obj.result[i].visitcount_s+"("+obj.result[i].visitcount+")"+"</td>"+
-				"<td>"+obj.result[i].applycount_s+"("+obj.result[i].applycount+")"+"</td>"+
-				"<td>"+obj.result[i].applyrefuse_s+"("+obj.result[i].applyrefuse+")"+"</td>"+
-				"<td>"+obj.result[i].creditcount_s+"("+obj.result[i].creditcount+")"+"</td>"+
-				"<td>"+obj.result[i].creditrefuse_s+"("+obj.result[i].creditrefuse+")"+"</td>"+
-				"<td>"+obj.result[i].realycount_s+"("+obj.result[i].realycount+")"+"</td>"+
-				"<td>"+obj.result[i].reportcount_s+"("+obj.result[i].reportcount+")"+"</td>"+
-				"<td>"+obj.result[i].internalcount_s+"("+obj.result[i].internalcount+")"+"</td>"+
-				"<td>"+obj.result[i].meetingcout_s+"("+obj.result[i].meetingcout+")"+"</td>"+
-				"<td>"+obj.result[i].passcount_s+"("+obj.result[i].passcount+")"+"</td>"+
-				"<td>"+obj.result[i].signcount_s+"("+obj.result[i].signcount+")"+"</td>"+
-				"<td>"+obj.result[i].givemoneycount_s+"("+obj.result[i].givemoneycount+")"+"</td>" +
-				"<td>"+obj.result[i].money+"</td>" +
-				"</tr>";
-
+		if(obj.formsize>1){
+			for(var i=0;i<obj.size;i++){
+				td=td+"<option  value ='"+obj.resultModel[i].userId+"@"+obj.resultModel[i].name+"'>"+obj.resultModel[i].name+"</option>";
 			}
-
+			th="<select id ='tdcuuser'  onchange='tdcuuser(this)'><option value = '0'>团队成员</option>"+
+			td+
+			"</select>";
+		}
+		for(var i=0;i<obj.formsize;i++){
+			if(obj.form[i].ordteam=="汇总" || obj.form[i].ordteam=="总计"){
+				body=body+"<tr><th>"+obj.form[i].ordteam+"</th>"+
+				"<th>"+obj.form[i].team+"</th>"+
+				"<th>"+obj.form[i].name+"</th>"+
+				"<th>"+obj.form[i].visitcount+"("+obj.form[i].visitcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].applycount+"("+obj.form[i].applycount_s+")"+"</th>"+
+				"<th>"+obj.form[i].applyrefuse+"("+obj.form[i].applyrefuse_s+")"+"</th>"+
+				"<th>"+obj.form[i].creditcount+"("+obj.form[i].creditcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].creditrefuse+"("+obj.form[i].creditrefuse_s+")"+"</th>"+
+				"<th>"+obj.form[i].realycount+"("+obj.form[i].realycount_s+")"+"</th>"+
+				"<th>"+obj.form[i].reportcount+"("+obj.form[i].reportcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].internalcount+"("+obj.form[i].internalcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].meetingcout+"("+obj.form[i].meetingcout_s+")"+"</th>"+
+				"<th>"+obj.form[i].passcount+"("+obj.form[i].passcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].signcount+"("+obj.form[i].signcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].givemoneycount+"("+obj.form[i].givemoneycount_s+")"+"</th>" +
+				"<th>"+obj.form[i].money1+"</th>" +
+				"</tr>";
+			}else{
+				body=body+"<tr><td>"+obj.form[i].ordteam+"</td>"+
+				"<td>"+obj.form[i].team+"</td>"+
+				"<td>"+obj.form[i].name+"</td>"+
+				"<td>"+obj.form[i].visitcount+"("+obj.form[i].visitcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].applycount+"("+obj.form[i].applycount_s+")"+"</td>"+
+				"<td>"+obj.form[i].applyrefuse+"("+obj.form[i].applyrefuse_s+")"+"</td>"+
+				"<td>"+obj.form[i].creditcount+"("+obj.form[i].creditcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].creditrefuse+"("+obj.form[i].creditrefuse_s+")"+"</td>"+
+				"<td>"+obj.form[i].realycount+"("+obj.form[i].realycount_s+")"+"</td>"+
+				"<td>"+obj.form[i].reportcount+"("+obj.form[i].reportcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].internalcount+"("+obj.form[i].internalcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].meetingcout+"("+obj.form[i].meetingcout_s+")"+"</td>"+
+				"<td>"+obj.form[i].passcount+"("+obj.form[i].passcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].signcount+"("+obj.form[i].signcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].givemoneycount+"("+obj.form[i].givemoneycount_s+")"+"</td>" +
+				"<td>"+obj.form[i].money1+"</td>" +
+				"</tr>";
+		}
 		}
 		var head ="<tr>"+
-		"<th>管辖行:</th>"+
+		"<th>区域:</th>"+
+		"<th>团队:</th>"+
 		"<th>客户经理:</th>"+
 		"<th>拜访数:</th>"+
 		"<th>申请数:</th>"+
@@ -550,86 +457,138 @@ function yjjdcx(){
 		"</tr>";
 
 		window.scrollTo(0,0);//滚动条回到顶端
-		$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='mywdjh()'/>业绩进度查询</div>"+  
+		$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='yjjdcx()'/>业绩进度查询" +
+				th+
+				"</div>"+  
 				"<div class='content' >"+ 
-				"<p style='margin-bottom:10px;margin-top:10px;'>"+
-				"<span style='float:left; margin-top:10px; margin-bottom:10px; margin-left:30px;'>开始日期:&nbsp;<input type ='date' id='satrtDate'/></span>"+
-				"<span style='float:left; margin-top:10px; margin-bottom:10px;'>结束日期:&nbsp;<input type ='date' id='endDate'/></span>"+
-				"<input type='button' style='margin-bottom:10px; margin-top:10px;' class='btn btn-large btn-primary next' value='筛选' id='sure'/></p>" +
 				"<table id='sslb' class='cpTable jjTable' style='text-align:center;'><colgroup>"+
 				head+body+
 				"</table>"+
 				"<p>" +
-				"<input type='button' class='btn btn-large btn-primary' value='修改业绩进度' id = 'save' onclick='yjjdxg()' />"+
-				"<input type='button' class='btn btn-large btn-primary' value='查看转化率' id = 'zhl' onclick='yjjdzhl()' />"+
-				"<input type='button' class='btn btn-large btn-primary' value='查看排名' id = 'ckpm' onclick='yjjdpm()' />"+
 				"<input type='button' class='btn btn-large' value='返回' onclick='mywdjh()'/></p>"+
 		"</div>");
 		$(".right").hide();
 		$("#mainPage").show(); 
 
-		$("#sure").click(function(){
-			$.ajax({
-				url:wsHost+jdcxurl,
-				type: "GET",
-				dataType:'json',
-				data:{
-					startdate:$("#satrtDate").val(),
-					enddate:$("#endDate").val(),
-				},
-				success: function (json){
-					var obj = $.evalJSON(json);
-					var booo="";
-					for(var i=0;i<obj.result.length;i++){
-
-						if(obj.result[i].managerName=="小计" || obj.result[i].managerName=="汇总"){
-
-							booo=booo+"<tr><th>"+obj.result[i].name+"</th>"+
-							"<th>"+obj.result[i].managerName+"</th>"+
-							"<th>"+obj.result[i].visitcount_s+"("+obj.result[i].visitcount+")"+"</th>"+
-							"<th>"+obj.result[i].applycount_s+"("+obj.result[i].applycount+")"+"</th>"+
-							"<th>"+obj.result[i].applyrefuse_s+"("+obj.result[i].applyrefuse+")"+"</th>"+
-							"<th>"+obj.result[i].creditcount_s+"("+obj.result[i].creditcount+")"+"</th>"+
-							"<th>"+obj.result[i].creditrefuse_s+"("+obj.result[i].creditrefuse+")"+"</th>"+
-							"<th>"+obj.result[i].realycount_s+"("+obj.result[i].realycount+")"+"</th>"+
-							"<th>"+obj.result[i].reportcount_s+"("+obj.result[i].reportcount+")"+"</th>"+
-							"<th>"+obj.result[i].internalcount_s+"("+obj.result[i].internalcount+")"+"</th>"+
-							"<th>"+obj.result[i].meetingcout_s+"("+obj.result[i].meetingcout+")"+"</th>"+
-							"<th>"+obj.result[i].passcount_s+"("+obj.result[i].passcount+")"+"</th>"+
-							"<th>"+obj.result[i].signcount_s+"("+obj.result[i].signcount+")"+"</th>"+
-							"<th>"+obj.result[i].givemoneycount_s+"("+obj.result[i].givemoneycount+")"+"</th>" +
-							"<th>"+obj.result[i].money+"</th>" +
-							"</tr>";
-
-						}else{
-
-							booo=booo+"<tr><td>"+obj.result[i].name+"</td>"+
-							"<td>"+obj.result[i].managerName+"</td>"+
-							"<td>"+obj.result[i].visitcount_s+"("+obj.result[i].visitcount+")"+"</td>"+
-							"<td>"+obj.result[i].applycount_s+"("+obj.result[i].applycount+")"+"</td>"+
-							"<td>"+obj.result[i].applyrefuse_s+"("+obj.result[i].applyrefuse+")"+"</td>"+
-							"<td>"+obj.result[i].creditcount_s+"("+obj.result[i].creditcount+")"+"</td>"+
-							"<td>"+obj.result[i].creditrefuse_s+"("+obj.result[i].creditrefuse+")"+"</td>"+
-							"<td>"+obj.result[i].realycount_s+"("+obj.result[i].realycount+")"+"</td>"+
-							"<td>"+obj.result[i].reportcount_s+"("+obj.result[i].reportcount+")"+"</td>"+
-							"<td>"+obj.result[i].internalcount_s+"("+obj.result[i].internalcount+")"+"</td>"+
-							"<td>"+obj.result[i].meetingcout_s+"("+obj.result[i].meetingcout+")"+"</td>"+
-							"<td>"+obj.result[i].passcount_s+"("+obj.result[i].passcount+")"+"</td>"+
-							"<td>"+obj.result[i].signcount_s+"("+obj.result[i].signcount+")"+"</td>"+
-							"<td>"+obj.result[i].givemoneycount_s+"("+obj.result[i].givemoneycount+")"+"</td>" +
-							"<th>"+obj.result[i].money+"</th>" +
-							"</tr>";
-
-						}
-
-					}
-					$("#sslb").html(head+booo);
-				}
-			})
-
-		})
 	}
 }
+
+function tdcuuser(){
+	var user=$("#tdcuuser").val();
+	if(user.split("@")[0]!=0 && user.split("@")[0]!="0"){
+	$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='yjjdcx()'/>"+user.split("@")[1]+"业绩进度查询</div>"+  
+			"</div>"+
+			"<div class='contents' id='allmap'  style='text-align:center;height:580px;margin:auto auto;'>" +
+			"<div class='spinner'>"+
+			"<div class='bounce1'></div>"+
+			"<div class='bounce2'></div>"+
+			"<div class='bounce3'></div>"+
+			"</div>"+
+			"</div>"+
+	"</div>");
+	var jdcxurl ="/ipad/performmance/selectManagerTeam.json?userId="+user.split("@")[0];
+	var body="";
+	$.get(wsHost+jdcxurl,callbackInfor);
+	function callbackInfor(json){
+		var obj = $.evalJSON(json);
+		for(var i=0;i<obj.formsize;i++){
+			if(obj.form[i].ordteam=="汇总" || obj.form[i].ordteam=="总计"){
+				body=body+"<tr><th>"+obj.result[i].ordteam+"</th>"+
+				"<th>"+obj.form[i].team+"</th>"+
+				"<th>"+obj.form[i].name+"</th>"+
+				"<th>"+obj.form[i].visitcount+"("+obj.form[i].visitcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].applycount+"("+obj.form[i].applycount_s+")"+"</th>"+
+				"<th>"+obj.form[i].applyrefuse+"("+obj.form[i].applyrefuse_s+")"+"</th>"+
+				"<th>"+obj.form[i].creditcount+"("+obj.form[i].creditcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].creditrefuse+"("+obj.form[i].creditrefuse_s+")"+"</th>"+
+				"<th>"+obj.form[i].realycount+"("+obj.form[i].realycount_s+")"+"</th>"+
+				"<th>"+obj.form[i].reportcount+"("+obj.form[i].reportcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].internalcount+"("+obj.form[i].internalcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].meetingcout+"("+obj.form[i].meetingcout_s+")"+"</th>"+
+				"<th>"+obj.form[i].passcount+"("+obj.form[i].passcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].signcount+"("+obj.form[i].signcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].givemoneycount+"("+obj.form[i].givemoneycount_s+")"+"</th>" +
+				"<th>"+obj.form[i].money1+"</th>" +
+				"</tr>";
+			}else{
+				body=body+"<tr><td>"+obj.form[i].ordteam+"</td>"+
+				"<td>"+obj.form[i].team+"</td>"+
+				"<td>"+obj.form[i].name+"</td>"+
+				"<td>"+obj.form[i].visitcount+"("+obj.form[i].visitcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].applycount+"("+obj.form[i].applycount_s+")"+"</td>"+
+				"<td>"+obj.form[i].applyrefuse+"("+obj.form[i].applyrefuse_s+")"+"</td>"+
+				"<td>"+obj.form[i].creditcount+"("+obj.form[i].creditcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].creditrefuse+"("+obj.form[i].creditrefuse_s+")"+"</td>"+
+				"<td>"+obj.form[i].realycount+"("+obj.form[i].realycount_s+")"+"</td>"+
+				"<td>"+obj.form[i].reportcount+"("+obj.form[i].reportcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].internalcount+"("+obj.form[i].internalcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].meetingcout+"("+obj.form[i].meetingcout_s+")"+"</td>"+
+				"<td>"+obj.form[i].passcount+"("+obj.form[i].passcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].signcount+"("+obj.form[i].signcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].givemoneycount+"("+obj.form[i].givemoneycount_s+")"+"</td>" +
+				"<td>"+obj.form[i].money1+"</td>" +
+				"</tr>";
+		}
+		}
+		var head ="<tr>"+
+		"<th>区域:</th>"+
+		"<th>团队:</th>"+
+		"<th>客户经理:</th>"+
+		"<th>拜访数:</th>"+
+		"<th>申请数:</th>"+
+		"<th>申请拒绝数:</th>"+
+		"<th>征信数:</th>"+
+		"<th>征信拒绝数:</th>"+
+		"<th>实调数:</th>"+
+		"<th>报告数:</th>"+
+		"<th>内审数:</th>"+
+		"<th>上会数:</th>"+
+		"<th>通过数:</th>"+
+		"<th>签约数:</th>"+
+		"<th>放款数:</th>"+
+		"<th>放款金额:</th>"+
+		"</tr>";
+
+		window.scrollTo(0,0);//滚动条回到顶端
+		$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='yjjdcx()'/>"+user.split("@")[1]+"业绩进度查询" +
+				"</div>"+  
+				"<div class='content' >"+ 
+				/*"<p style='margin-bottom:10px;margin-top:10px;'>"+
+				"<span style='float:left; margin-top:10px; margin-bottom:10px; margin-left:30px;'>开始日期:&nbsp;<input type ='date' id='satrtDate'/></span>"+
+				"<span style='float:left; margin-top:10px; margin-bottom:10px;'>结束日期:&nbsp;<input type ='date' id='endDate'/></span>"+
+				"<input type='button' style='margin-bottom:10px; margin-top:10px;' class='btn btn-large btn-primary next' value='筛选' id='sure'/></p>" +*/
+				"<table id='sslb' class='cpTable jjTable' style='text-align:center;'><colgroup>"+
+				head+body+
+				"</table>"+
+				"<p>" +
+				"<input type='button' class='btn btn-large' value='返回' onclick='yjjdcx()'/></p>"+
+		"</div>");
+		$(".right").hide();
+		$("#mainPage").show(); 
+	}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+	
 function yjjdxg(){
 	var	managerList=window.sessionStorage.getItem("managerList");
 	window.scrollTo(0,0);//滚动条回到顶端
