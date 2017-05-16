@@ -383,13 +383,23 @@ function yjjdcx(){
 			"</div>"+
 			"</div>"+
 	"</div>");
-	var jdcxurl ="/ipad/performmance/selectManagerTeam.json?userId="+window.sessionStorage.getItem("userId");;
+	var jdcxurl="";
+	var name="";
+	if(window.sessionStorage.getItem("userType")=="1"){
+		jdcxurl ="/ipad/performmance/selectManagerTeam.json?userId="+window.sessionStorage.getItem("userId");
+	}else{
+		jdcxurl ="/ipad/performmance/selectAllManegerYj.page";
+		name="<input type='button' class='btn btn-large btn-primary' value='查询选中团队/区域业绩' id='save'/>";
+	}
 	var body ="";
 	var td="";
 	var th="";
+	var td1="";
+	var th1="";
 	$.get(wsHost+jdcxurl,callbackInfor);
 	function callbackInfor(json){
 		var obj = $.evalJSON(json);
+		if(window.sessionStorage.getItem("userType")=="1"){
 		if(obj.formsize>1){
 			for(var i=0;i<obj.size;i++){
 				td=td+"<option  value ='"+obj.resultModel[i].userId+"@"+obj.resultModel[i].name+"'>"+obj.resultModel[i].name+"</option>";
@@ -397,6 +407,18 @@ function yjjdcx(){
 			th="<select id ='tdcuuser'  onchange='tdcuuser(this)'><option value = '0'>团队成员</option>"+
 			td+
 			"</select>";
+		}}else{
+			for(var i=0;i<obj.size;i++){
+				td=td+"<option  value ='"+obj.resultModel[i].team+"'>"+obj.resultModel[i].team+"</option>";
+				td1=td1+"<option  value ='"+obj.resultModel[i].ordteam+"'>"+obj.resultModel[i].ordteam+"</option>";
+			}
+			th="<select id ='team'><option value = '0'>团队</option>"+
+			td+
+			"</select>";
+			th1="<select id ='orgteam'><option value = '0'>区域</option>"+
+			td1+
+			"</select>";
+			th=th+th1;
 		}
 		for(var i=0;i<obj.formsize;i++){
 			if(obj.form[i].ordteam=="汇总" || obj.form[i].ordteam=="总计"){
@@ -465,11 +487,28 @@ function yjjdcx(){
 				head+body+
 				"</table>"+
 				"<p>" +
+				name+
 				"<input type='button' class='btn btn-large' value='返回' onclick='mywdjh()'/></p>"+
 		"</div>");
 		$(".right").hide();
 		$("#mainPage").show(); 
-
+		$("#save").click(function(){
+			var team=$("#team").val();
+			var orgteam=$("#orgteam").val();
+			if(team=="0" &&team==0 &&orgteam==0 &&orgteam=="0"){
+				window.wxc.xcConfirm("请选择正确的区域或者团队", "success");
+			}else if(team!="0" &&team!=0 &&orgteam!=0 &&orgteam!="0"){
+				var size="0";
+				selectTeamorOrgteam(team,orgteam,size);
+			}else if(team!="0" &&team!=0 &&orgteam==0 &&orgteam=="0"){
+				var size="1";
+				selectTeamorOrgteam(team,orgteam,size);
+			}else if(orgteam!="0" &&orgteam!=0 &&team==0 &&team=="0"){
+				var size="2";
+				selectTeamorOrgteam(team,orgteam,size);
+			}
+		});
+		
 	}
 }
 
@@ -1330,4 +1369,108 @@ function yjjdpm(){
 
 		})
 	}
+}
+
+
+function selectTeamorOrgteam(team,orgteam,size){
+	var name="";
+	if(size=="0"){
+		name=orgteam+"("+team+")"
+	}else if(size=="1"){
+		name=team;
+	}else if(size=="2"){
+		name=orgteam;
+	}
+	
+	$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='yjjdcx()'/>"+name+"业绩进度查询</div>"+  
+			"</div>"+
+			"<div class='contents' id='allmap'  style='text-align:center;height:580px;margin:auto auto;'>" +
+			"<div class='spinner'>"+
+			"<div class='bounce1'></div>"+
+			"<div class='bounce2'></div>"+
+			"<div class='bounce3'></div>"+
+			"</div>"+
+			"</div>"+
+	"</div>");
+	var head ="<tr>"+
+	"<th>区域:</th>"+
+	"<th>团队:</th>"+
+	"<th>客户经理:</th>"+
+	"<th>拜访数:</th>"+
+	"<th>申请数:</th>"+
+	"<th>申请拒绝数:</th>"+
+	"<th>征信数:</th>"+
+	"<th>征信拒绝数:</th>"+
+	"<th>实调数:</th>"+
+	"<th>报告数:</th>"+
+	"<th>内审数:</th>"+
+	"<th>上会数:</th>"+
+	"<th>通过数:</th>"+
+	"<th>签约数:</th>"+
+	"<th>放款数:</th>"+
+	"<th>放款金额:</th>"+
+	"</tr>";
+	var jdcxurl ="/ipad/performmance/selectAllManagerByOrgTeam.page?team="+team+"&orgteam="+orgteam;
+	var body="";
+	$.ajax({
+		url:wsHost+jdcxurl,
+		type: "GET",
+		dataType:'json',
+		success: function (json){
+		var obj = $.evalJSON(json);
+		for(var i=0;i<obj.formsize;i++){
+			if(obj.form[i].ordteam=="汇总" || obj.form[i].ordteam=="总计"){
+				body=body+"<tr><th>"+obj.form[i].ordteam+"</th>"+
+				"<th>"+obj.form[i].team+"</th>"+
+				"<th>"+obj.form[i].name+"</th>"+
+				"<th>"+obj.form[i].visitcount+"("+obj.form[i].visitcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].applycount+"("+obj.form[i].applycount_s+")"+"</th>"+
+				"<th>"+obj.form[i].applyrefuse+"("+obj.form[i].applyrefuse_s+")"+"</th>"+
+				"<th>"+obj.form[i].creditcount+"("+obj.form[i].creditcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].creditrefuse+"("+obj.form[i].creditrefuse_s+")"+"</th>"+
+				"<th>"+obj.form[i].realycount+"("+obj.form[i].realycount_s+")"+"</th>"+
+				"<th>"+obj.form[i].reportcount+"("+obj.form[i].reportcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].internalcount+"("+obj.form[i].internalcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].meetingcout+"("+obj.form[i].meetingcout_s+")"+"</th>"+
+				"<th>"+obj.form[i].passcount+"("+obj.form[i].passcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].signcount+"("+obj.form[i].signcount_s+")"+"</th>"+
+				"<th>"+obj.form[i].givemoneycount+"("+obj.form[i].givemoneycount_s+")"+"</th>" +
+				"<th>"+obj.form[i].money1+"</th>" +
+				"</tr>";
+			}else{
+				body=body+"<tr><td>"+obj.form[i].ordteam+"</td>"+
+				"<td>"+obj.form[i].team+"</td>"+
+				"<td>"+obj.form[i].name+"</td>"+
+				"<td>"+obj.form[i].visitcount+"("+obj.form[i].visitcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].applycount+"("+obj.form[i].applycount_s+")"+"</td>"+
+				"<td>"+obj.form[i].applyrefuse+"("+obj.form[i].applyrefuse_s+")"+"</td>"+
+				"<td>"+obj.form[i].creditcount+"("+obj.form[i].creditcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].creditrefuse+"("+obj.form[i].creditrefuse_s+")"+"</td>"+
+				"<td>"+obj.form[i].realycount+"("+obj.form[i].realycount_s+")"+"</td>"+
+				"<td>"+obj.form[i].reportcount+"("+obj.form[i].reportcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].internalcount+"("+obj.form[i].internalcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].meetingcout+"("+obj.form[i].meetingcout_s+")"+"</td>"+
+				"<td>"+obj.form[i].passcount+"("+obj.form[i].passcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].signcount+"("+obj.form[i].signcount_s+")"+"</td>"+
+				"<td>"+obj.form[i].givemoneycount+"("+obj.form[i].givemoneycount_s+")"+"</td>" +
+				"<td>"+obj.form[i].money1+"</td>" +
+				"</tr>";
+		}
+		}
+		window.scrollTo(0,0);//滚动条回到顶端
+		$("#mainPage").html("<div class='title'><img src='images/back.png' onclick='yjjdcx()'/>"+name+"业绩进度查询" +
+				"</div>"+  
+				"<div class='content' >"+ 
+				"<table id='sslb' class='cpTable jjTable' style='text-align:center;'><colgroup>"+
+				head+body+
+				"</table>"+
+				"<p>" +
+				"<input type='button' class='btn btn-large' value='返回' onclick='yjjdcx()'/></p>"+
+		"</div>");
+		$(".right").hide();
+		$("#mainPage").show(); 
+		
+		
+		
+	}})
 }
